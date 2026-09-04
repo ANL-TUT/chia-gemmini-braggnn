@@ -1,0 +1,45 @@
+# ===== diff: generators/gemmini =====
+diff --git a/src/main/scala/gemmini/Configs.scala b/src/main/scala/gemmini/Configs.scala
+index 15b66db..c735699 100644
+--- a/src/main/scala/gemmini/Configs.scala
++++ b/src/main/scala/gemmini/Configs.scala
+@@ -31,8 +31,8 @@ object GemminiConfigs {
+     // Spatial array size options
+     tileRows = 1,
+     tileColumns = 1,
+-    meshRows = 16,
+-    meshColumns = 16,
++    meshRows = 8,
++    meshColumns = 8,
+ 
+     // Spatial array PE options
+     dataflow = Dataflow.BOTH,
+diff --git a/src/main/scala/gemmini/CustomConfigs.scala b/src/main/scala/gemmini/CustomConfigs.scala
+index b7f93ab..fb44784 100644
+--- a/src/main/scala/gemmini/CustomConfigs.scala
++++ b/src/main/scala/gemmini/CustomConfigs.scala
+@@ -59,8 +59,18 @@ object GemminiCustomConfigs {
+     acc_sub_banks = 1
+   )
+ 
++  // 8x8 systolic array configuration
++  val smallSystolicConfig = defaultConfig.copy(
++    meshRows = 8,
++    meshColumns = 8,
++    has_training_convs = false,
++    has_max_pool = false,
++    sp_capacity = CapacityInKilobytes(64),
++    acc_capacity = CapacityInKilobytes(16),
++  )
++
+   // Specify which of your custom configs you want to build here
+-  val customConfig = unifiedMemConfig
++  val customConfig = smallSystolicConfig
+ }
+ 
+ 
+@@ -75,4 +85,3 @@ class GemminiCustomConfig[T <: Data : Arithmetic, U <: Data, V <: Data](
+     }
+   )
+ })
+-

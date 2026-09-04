@@ -1,0 +1,11 @@
+Picked up JAVA_TOOL_OPTIONS: -Xmx8G -Xss8M -Djava.io.tmpdir=/home/ray/chipyard/.java_tmp
+Warning: Tried to extract the base path for relative glob tools/stage/src/main/scala/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+Warning: Tried to extract the base path for relative glob tools/stage/src/main/scala/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+Warning: Tried to extract the base path for relative glob tools/firrtl2/src/main/java/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+Warning: Tried to extract the base path for relative glob tools/firrtl2/src/main/java/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+Picked up JAVA_TOOL_OPTIONS: -Xmx8G -Xss8M -Djava.io.tmpdir=/home/ray/chipyard/.java_tmp
+Picked up JAVA_TOOL_OPTIONS: -Xmx8G -Xss8M -Djava.io.tmpdir=/home/ray/chipyard/.java_tmp
+Error: Could not find or load main class chipyard.Generator
+Caused by: java.lang.ClassNotFoundException: chipyard.Generator
+make: *** [/home/ray/chipyard/common.mk:151: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/chipyard.harness.TestHarness.GemminiRocketConfig.fir] Error 1
+make: *** Waiting for unfinished jobs....

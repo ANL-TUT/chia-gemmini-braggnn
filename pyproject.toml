@@ -1,0 +1,19 @@
+[project]
+name = "chia-gemmini-braggnn"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Hoku Ishibe", email = "me@hokuishi.be" }
+]
+requires-python = ">=3.10.19"
+dependencies = [
+    "google-cloud-compute>=1.51.0",
+]
+
+[project.scripts]
+chia-gemmini-braggnn = "chia_gemmini_braggnn:main"
+
+[build-system]
+requires = ["uv_build>=0.12.3,<0.13.0"]
+build-backend = "uv_build"

@@ -1,0 +1,133 @@
+cluster_name: GemminiBraggNN
+
+# Join every machine (head + on-prem + cloud) to the tailnet.
+# manage_all: CHIA installs/starts/joins userspace tailscale itself;
+# head_tailnet_ip is discovered at bring-up.
+tailnet:
+    manage_all: false
+    auth_key: ${TS_AUTHKEY}      # reusable tailscale auth key
+    # head_tailnet_ip is omitted — discovered when CHIA joins the head.
+    # A non-default proxy port keeps this cluster's daemons fully
+    # independent of any personally-run tailscaled (which typically
+    # serves 1055). Binaries/state live in /tmp/<cluster_name>/tailscale.
+    socks_proxy: 127.0.0.1:1155
+    head_tailnet_ip: ${HEAD_IP}
+
+provider:
+    type: local
+    head_ip: ${HEAD_IP}
+    # No worker_ips: the worker pool is the union of every node type's
+    # compatible_ips below (on-prem hosts + the cloud @-placeholders).
+
+auth:
+    ssh_user: ${USER}
+    ssh_private_key: ~/.ssh/id_ed25519
+    #ssh_proxy_command: "socat - SOCKS5:127.0.0.1:%h:%p,socksport=1155"
+    ssh_proxy_command: "socat - TCP:%h:%p"
+    overrides:
+        "${BXE_IP}":
+            ssh_user: ${BXE_USER}
+
+gcp_nodes:
+    project: ${GCP_PROJECT}
+    zone: us-central1-b
+    gcp_worker:
+        machine_type: n2-standard-8
+        count: 3
+        image: "projects/debian-cloud/global/images/family/debian-12"
+        ssh_user: ${USER} # local user created on the VM
+        #ssh_private_key: ${GCP_PRIVATE_KEY_PATH}
+        ssh_private_key: ~/.ssh/id_ed25519
+        spot: false  # PREEMPTIBLE_CPUS quota is 0 in this project; spot can't provision here
+        disk_size_gb: 100
+
+    #gcp_worker_light:
+    #    machine_type: e2-standard-4
+    #    count: 2
+    #    image: fedora-cloud
+    #    ssh_user: chia # local user created on the VM
+    #    #ssh_private_key: ${GCP_PRIVATE_KEY_PATH}
+    #    spot: true
+    #    disk_size_gb: 30
+
+available_node_types:
+  chipyard:
+    resources: {"chipyard": 1}
+    num_workers: 1
+    compatible_ips: ["@gcp_worker:0"]
+    worker_setup_commands:
+      - "source /home/ray/chipyard/env.sh"
+      - "export PATH=/home/ray/anaconda3/envs/py_worker/bin:$PATH"
+    docker:
+      image: "ghcr.io/ucb-bar/chia-chisel-build:latest"
+      container_name: "chia-chisel-build-${USER}"
+      #pull_before_run: True
+      pull_timeout: 7200  # chia-chisel-build is large; default 600s is too short
+      run_options:
+        - --ulimit nofile=65536:65536
+        - --shm-size=10.24gb
+      run_setup_commands:
+        - "pip install openai pyyaml tqdm numpy python-dotenv"
+        - "pip install exo-lang"
+
+  opencode:
+    resources: {"opencode_creds": 1}
+    #num_workers: 2
+    #compatible_ips: ["@gcp_worker:0", "@gcp_worker:1"]
+    num_workers: 1
+    compatible_ips: ["@gcp_worker:1"]
+    docker:
+      image: "ghcr.io/ucb-bar/chia-opencode:latest"
+      container_name: "chia-opencode-${USER}"
+      pull_timeout: 7200
+      run_options:
+        - --ulimit nofile=65536:65536
+        - --shm-size=10.24gb
+        - "-v ${HOME}/.config/gcloud:/home/ray/.config/gcloud"   # ADC file
+        - "-e GOOGLE_CLOUD_PROJECT=${GCP_PROJECT}"     # project
+        - "-e VERTEX_LOCATION=global"                           # Gemini Pro is global-only
+        # service-account key instead of a login:
+        # - "-v /path/to/sa-key.json:/home/ray/sa-key.json:ro"
+        # - "-e GOOGLE_APPLICATION_CREDENTIALS=/home/ray/sa-key.json"
+
+  alphaevolver:
+    resources: {"evolver": 1}
+    num_workers: 1
+    compatible_ips: ["@gcp_worker:2"]
+    worker_env_commands:
+        - "source ~/.bashrc && conda activate chia_env"
+    worker_setup_commands:
+        - "pip install openai pyyaml tqdm numpy python-dotenv google-auth requests"
+        - "git clone https://github.com/ucb-bar/evolve-flows.git"
+        - "pip install -e evolve-flows"
+
+  #verilator_run:
+  #  resources: {"verilator_run": 1}
+  #  num_workers: 1
+  #  compatible_ips: ["@gcp_worker:3"]
+  #  docker:
+  #    image: "ghcr.io/ucb-bar/chia-verilator-run:latest"
+  #    container_name: "chia-verilator-${USER}"
+  #    pull_before_run: True
+  #    pull_timeout: 7200
+  #    run_options:
+  #      - --ulimit nofile=65536:65536
+  #      - --shm-size=10.24gb
+
+  bxe:
+    resources: {"BXE": 1}
+    num_workers: 1
+    compatible_ips: ["${BXE_IP}"]
+    worker_env_commands:
+          - "source ~/.bashrc && cd ~/chipyard/sims/firesim && source ./sourceme-manager.sh && export RAY_DEFAULT_PYTHON_VERSION_MATCH_LEVEL=minor"
+
+
+head_env_commands: ["source ${HEAD_ENV_PATH}"]
+
+head_start_ray_commands:
+    - ray stop
+    - ray start --head --port=6379 --include-dashboard=True --dashboard-agent-listen-port=0
+
+worker_start_ray_commands:
+    - ray stop
+    - ray start --address=$RAY_HEAD_IP:6379 --dashboard-agent-listen-port=0

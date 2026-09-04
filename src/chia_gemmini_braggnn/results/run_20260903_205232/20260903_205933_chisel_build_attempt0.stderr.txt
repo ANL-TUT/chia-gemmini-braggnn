@@ -1,0 +1,391 @@
+Picked up JAVA_TOOL_OPTIONS: -Xmx8G -Xss8M -Djava.io.tmpdir=/home/ray/chipyard/.java_tmp
+BusPacket.cpp: In member function 'void DRAMSim::BusPacket::print(uint64_t, bool)':
+BusPacket.cpp:63:9: warning: 'nonnull' argument 'this' compared to NULL [-Wnonnull-compare]
+   63 |         if (this == NULL)
+      |         ^~
+BusPacket.cpp: In member function 'void DRAMSim::BusPacket::print()':
+BusPacket.cpp:104:9: warning: 'nonnull' argument 'this' compared to NULL [-Wnonnull-compare]
+  104 |         if (this == NULL) //pointer use makes this a necessary precaution
+      |         ^~
+/home/ray/chipyard/build.sbt:62: warning: method sonatypeRepo in class ResolverFunctions is deprecated (since 1.7.0): Use sonatypeOssRepos instead e.g. `resolvers ++= Resolver.sonatypeOssRepos("snapshots")`
+    Resolver.sonatypeRepo("snapshots"),
+             ^
+/home/ray/chipyard/build.sbt:63: warning: method sonatypeRepo in class ResolverFunctions is deprecated (since 1.7.0): Use sonatypeOssRepos instead e.g. `resolvers ++= Resolver.sonatypeOssRepos("snapshots")`
+    Resolver.sonatypeRepo("releases"),
+             ^
+Warning: Tried to extract the base path for relative glob tools/stage/src/main/scala/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+Warning: Tried to extract the base path for relative glob tools/stage/src/main/scala/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+Warning: Tried to extract the base path for relative glob tools/firrtl2/src/main/java/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+Warning: Tried to extract the base path for relative glob tools/firrtl2/src/main/java/**/*.{java,scala}. To disable this warning, re-run the program with java option, -Dsbt.io.implicit.relative.glob.conversion=allow
+Picked up JAVA_TOOL_OPTIONS: -Xmx8G -Xss8M -Djava.io.tmpdir=/home/ray/chipyard/.java_tmp
+Picked up JAVA_TOOL_OPTIONS: -Xmx8G -Xss8M -Djava.io.tmpdir=/home/ray/chipyard/.java_tmp
+<stdin>:82.18-87.5: Warning (simple_bus_reg): /soc/cbus_clock: missing or empty reg/ranges property
+<stdin>:109.18-114.5: Warning (simple_bus_reg): /soc/fbus_clock: missing or empty reg/ranges property
+<stdin>:125.18-130.5: Warning (simple_bus_reg): /soc/mbus_clock: missing or empty reg/ranges property
+<stdin>:131.18-136.5: Warning (simple_bus_reg): /soc/pbus_clock: missing or empty reg/ranges property
+<stdin>:142.18-147.5: Warning (simple_bus_reg): /soc/sbus_clock: missing or empty reg/ranges property
+make: [/home/ray/chipyard/common.mk:288: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/chipyard.harness.TestHarness.GemminiRocketConfig.top.mems.conf] Error 1 (ignored)
+Picked up JAVA_TOOL_OPTIONS: -Xmx8G -Xss8M -Djava.io.tmpdir=/home/ray/chipyard/.java_tmp
+Picked up JAVA_TOOL_OPTIONS: -Xmx8G -Xss8M -Djava.io.tmpdir=/home/ray/chipyard/.java_tmp
+WARNING: Empty *.mems.conf file. No memories generated.
+%Warning-REDEFMACRO: Redefining existing define: 'VERILATOR', with different value: ''
+                     ... Location of previous definition, with value: '1'
+                     ... For warning description see https://verilator.org/warn/REDEFMACRO?v=5.022
+                     ... Use "/* verilator lint_off REDEFMACRO */" and lint_on around source to disable this message.
+%Warning-ASCRANGE: /home/ray/chipyard/generators/radiance/src/main/resources/vsrc/vortex/third_party/fpnew/src/fpnew_pkg.sv:52:28: Ascending bit range vector: left < right of bit range: [0:4]
+                                                                                                                                 : ... note: In instance 'TestDriver'
+   52 |   localparam fp_encoding_t [0:NUM_FP_FORMATS-1] FP_ENCODINGS  = '{
+      |                            ^
+%Warning-ASCRANGE: /home/ray/chipyard/generators/radiance/src/main/resources/vsrc/vortex/third_party/fpnew/src/fpnew_pkg.sv:61:17: Ascending bit range vector: left < right of bit range: [0:4]
+                                                                                                                                 : ... note: In instance 'TestDriver'
+   61 |   typedef logic [0:NUM_FP_FORMATS-1]       fmt_logic_t;     
+      |                 ^
+%Warning-ASCRANGE: /home/ray/chipyard/generators/radiance/src/main/resources/vsrc/vortex/third_party/fpnew/src/fpnew_pkg.sv:107:17: Ascending bit range vector: left < right of bit range: [0:3]
+                                                                                                                                  : ... note: In instance 'TestDriver'
+  107 |   typedef logic [0:NUM_INT_FORMATS-1] ifmt_logic_t;  
+      |                 ^
+%Warning-ASCRANGE: /home/ray/chipyard/generators/radiance/src/main/resources/vsrc/vortex/third_party/fpnew/src/fpnew_pkg.sv:62:17: Ascending bit range vector: left < right of bit range: [0:4]
+                                                                                                                                 : ... note: In instance 'TestDriver'
+   62 |   typedef logic [0:NUM_FP_FORMATS-1][31:0] fmt_unsigned_t;  
+      |                 ^
+%Warning-ASCRANGE: /home/ray/chipyard/generators/radiance/src/main/resources/vsrc/vortex/third_party/fpnew/src/fpnew_pkg.sv:201:26: Ascending bit range vector: left < right of bit range: [0:3]
+                                                                                                                                  : ... note: In instance 'TestDriver'
+  201 |   typedef fmt_unsigned_t [0:NUM_OPGROUPS-1] opgrp_fmt_unsigned_t;
+      |                          ^
+%Warning-ASCRANGE: /home/ray/chipyard/generators/radiance/src/main/resources/vsrc/vortex/third_party/fpnew/src/fpnew_pkg.sv:196:23: Ascending bit range vector: left < right of bit range: [0:4]
+                                                                                                                                  : ... note: In instance 'TestDriver'
+  196 |   typedef unit_type_t [0:NUM_FP_FORMATS-1] fmt_unit_types_t;
+      |                       ^
+%Warning-ASCRANGE: /home/ray/chipyard/generators/radiance/src/main/resources/vsrc/vortex/third_party/fpnew/src/fpnew_pkg.sv:199:28: Ascending bit range vector: left < right of bit range: [0:3]
+                                                                                                                                  : ... note: In instance 'TestDriver'
+  199 |   typedef fmt_unit_types_t [0:NUM_OPGROUPS-1] opgrp_fmt_unit_types_t;
+      |                            ^
+%Warning-WIDTHTRUNC: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/ram_data_3x128.sv:26:24: Bit extraction of var[127:0] requires 7 bit index, not 8 bits.
+                                                                                                                                                            : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.queue.ram_data_ext'
+   26 |             _RANDOM_MEM[j +: 32] = $random;  
+      |                        ^
+%Warning-WIDTHTRUNC: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/ram_8x246.sv:26:24: Bit extraction of var[255:0] requires 8 bit index, not 9 bits.
+                                                                                                                                                       : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.gemmini.load_controller.cmd_q.ram_ext'
+   26 |             _RANDOM_MEM[j +: 32] = $random;  
+      |                        ^
+%Warning-WIDTHTRUNC: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/ram_2x118.sv:26:24: Bit extraction of var[127:0] requires 7 bit index, not 8 bits.
+                                                                                                                                                       : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceA.io_a_q.ram_ext'
+   26 |             _RANDOM_MEM[j +: 32] = $random;  
+      |                        ^
+%Warning-WIDTHTRUNC: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/ram_12x110.sv:26:24: Bit extraction of var[127:0] requires 7 bit index, not 8 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceC.queue.ram_ext'
+   26 |             _RANDOM_MEM[j +: 32] = $random;  
+      |                        ^
+%Warning-WIDTHTRUNC: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/ram_2x119.sv:26:24: Bit extraction of var[127:0] requires 7 bit index, not 8 bits.
+                                                                                                                                                       : ... note: In instance 'TestDriver.testHarness.chiptop0.system.fbus.coupler_from_port_named_serial_tl_0_in.buffer.nodeOut_a_q.ram_ext'
+   26 |             _RANDOM_MEM[j +: 32] = $random;  
+      |                        ^
+%Warning-WIDTHTRUNC: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/ram_2x111.sv:26:24: Bit extraction of var[127:0] requires 7 bit index, not 8 bits.
+                                                                                                                                                       : ... note: In instance 'TestDriver.testHarness.chiptop0.system.cbus.coupler_to_prci_ctrl.buffer.nodeOut_a_q.ram_ext'
+   26 |             _RANDOM_MEM[j +: 32] = $random;  
+      |                        ^
+%Warning-WIDTHTRUNC: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/ram_2x105.sv:26:24: Bit extraction of var[127:0] requires 7 bit index, not 8 bits.
+                                                                                                                                                       : ... note: In instance 'TestDriver.testHarness.chiptop0.system.cbus.wrapped_error_device.buffer.nodeOut_a_q.ram_ext'
+   26 |             _RANDOM_MEM[j +: 32] = $random;  
+      |                        ^
+%Warning-WIDTHTRUNC: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/data_28x46.sv:26:24: Bit extraction of var[63:0] requires 6 bit index, not 7 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.requests.data_ext'
+   26 |             _RANDOM_MEM[j +: 32] = $random;  
+      |                        ^
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:47: Operator COND expects 32 or 4 bits on the Conditional True, but Conditional True's VARREF 'select' generates 2 bits.
+                                                                                                                                                       : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:47: Operator COND expects 32 or 4 bits on the Conditional False, but Conditional False's CONST '2'h0' generates 2 bits.
+                                                                                                                                                       : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:87: Operator COND expects 32 or 4 bits on the Conditional True, but Conditional True's VARREF 'select' generates 2 bits.
+                                                                                                                                                       : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:87: Operator COND expects 32 or 4 bits on the Conditional False, but Conditional False's CONST '2'h0' generates 2 bits.
+                                                                                                                                                       : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:127: Operator COND expects 32 or 4 bits on the Conditional True, but Conditional True's VARREF 'select' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:127: Operator COND expects 32 or 4 bits on the Conditional False, but Conditional False's CONST '2'h0' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:167: Operator COND expects 32 or 4 bits on the Conditional True, but Conditional True's VARREF 'select' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:167: Operator COND expects 32 or 4 bits on the Conditional False, but Conditional False's CONST '2'h0' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:207: Operator COND expects 32 or 4 bits on the Conditional True, but Conditional True's VARREF 'select' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:207: Operator COND expects 32 or 4 bits on the Conditional False, but Conditional False's CONST '2'h0' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:247: Operator COND expects 32 or 4 bits on the Conditional True, but Conditional True's VARREF 'select' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:247: Operator COND expects 32 or 4 bits on the Conditional False, but Conditional False's CONST '2'h0' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:286: Operator COND expects 32 or 4 bits on the Conditional True, but Conditional True's VARREF 'select' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:286: Operator COND expects 32 or 4 bits on the Conditional False, but Conditional False's CONST '2'h0' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:325: Operator COND expects 32 or 4 bits on the Conditional True, but Conditional True's VARREF 'select' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:325: Operator COND expects 32 or 4 bits on the Conditional False, but Conditional False's CONST '2'h0' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:363: Operator COND expects 32 or 4 bits on the Conditional True, but Conditional True's VARREF 'select' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:363: Operator COND expects 32 or 4 bits on the Conditional False, but Conditional False's CONST '2'h0' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:401: Operator COND expects 32 or 4 bits on the Conditional True, but Conditional True's VARREF 'select' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:401: Operator COND expects 32 or 4 bits on the Conditional False, but Conditional False's CONST '2'h0' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:439: Operator COND expects 32 or 4 bits on the Conditional True, but Conditional True's VARREF 'select' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:439: Operator COND expects 32 or 4 bits on the Conditional False, but Conditional False's CONST '2'h0' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:477: Operator COND expects 32 or 4 bits on the Conditional True, but Conditional True's VARREF 'select' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:477: Operator COND expects 32 or 4 bits on the Conditional False, but Conditional False's CONST '2'h0' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:515: Operator COND expects 32 or 4 bits on the Conditional True, but Conditional True's VARREF 'select' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:515: Operator COND expects 32 or 4 bits on the Conditional False, but Conditional False's CONST '2'h0' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:553: Operator COND expects 32 or 4 bits on the Conditional True, but Conditional True's VARREF 'select' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:553: Operator COND expects 32 or 4 bits on the Conditional False, but Conditional False's CONST '2'h0' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:591: Operator COND expects 32 or 4 bits on the Conditional True, but Conditional True's VARREF 'select' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:591: Operator COND expects 32 or 4 bits on the Conditional False, but Conditional False's CONST '2'h0' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:629: Operator COND expects 32 or 4 bits on the Conditional True, but Conditional True's VARREF 'select' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Atomics.sv:163:629: Operator COND expects 32 or 4 bits on the Conditional False, but Conditional False's CONST '2'h0' generates 2 bits.
+                                                                                                                                                        : ... note: In instance 'TestDriver.testHarness.chiptop0.system.coh_wrapper.l2.inclusive_cache_bank_sched.sourceD.atomics'
+%Warning-WIDTHTRUNC: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/rf_31x64.sv:30:24: Bit extraction of var[63:0] requires 6 bit index, not 7 bits.
+                                                                                                                                                      : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.core.rf_ext'
+   30 |             _RANDOM_MEM[j +: 32] = $random;  
+      |                        ^
+%Warning-WIDTHTRUNC: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/ram_2x60.sv:26:24: Bit extraction of var[63:0] requires 6 bit index, not 7 bits.
+                                                                                                                                                      : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.buffer.nodeIn_b_q.ram_ext'
+   26 |             _RANDOM_MEM[j +: 32] = $random;  
+      |                        ^
+%Warning-WIDTHTRUNC: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/ram_2x120.sv:26:24: Bit extraction of var[127:0] requires 7 bit index, not 8 bits.
+                                                                                                                                                       : ... note: In instance 'TestDriver.testHarness.chiptop0.system.cbus.buffer.nodeOut_a_q.ram_ext'
+   26 |             _RANDOM_MEM[j +: 32] = $random;  
+      |                        ^
+%Warning-WIDTHTRUNC: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/ram_2x115.sv:26:24: Bit extraction of var[127:0] requires 7 bit index, not 8 bits.
+                                                                                                                                                       : ... note: In instance 'TestDriver.testHarness.chiptop0.system.bank.buffer.nodeOut_a_q.ram_ext'
+   26 |             _RANDOM_MEM[j +: 32] = $random;  
+      |                        ^
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/ExecuteController.sv:461:55: Operator COND expects 32 or 7 bits on the Conditional True, but Conditional True's CONST '2'h1' generates 2 bits.
+                                                                                                                                                                 : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.gemmini.ex_controller'
+  461 |   wire [63:0]      _GEN_6 = _GEN_5[_b_address_place_T ? 2'h1 : {a_should_be_fed_into_transposer, 1'h0}];  
+      |                                                       ^
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/ExecuteController.sv:461:55: Operator COND expects 32 or 7 bits on the Conditional False, but Conditional False's REPLICATE generates 2 bits.
+                                                                                                                                                                 : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.gemmini.ex_controller'
+  461 |   wire [63:0]      _GEN_6 = _GEN_5[_b_address_place_T ? 2'h1 : {a_should_be_fed_into_transposer, 1'h0}];  
+      |                                                       ^
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/ExecuteController.sv:463:55: Operator COND expects 32 or 7 bits on the Conditional True, but Conditional True's CONST '2'h1' generates 2 bits.
+                                                                                                                                                                 : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.gemmini.ex_controller'
+  463 |   wire [63:0]      _GEN_8 = _GEN_7[_b_address_place_T ? 2'h1 : {b_should_be_fed_into_transposer, 1'h0}];  
+      |                                                       ^
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/ExecuteController.sv:463:55: Operator COND expects 32 or 7 bits on the Conditional False, but Conditional False's REPLICATE generates 2 bits.
+                                                                                                                                                                 : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.gemmini.ex_controller'
+  463 |   wire [63:0]      _GEN_8 = _GEN_7[_b_address_place_T ? 2'h1 : {b_should_be_fed_into_transposer, 1'h0}];  
+      |                                                       ^
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:40: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_0' generates 3 bits.
+                                                                                                                                                   : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:40: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                   : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:90: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_1' generates 3 bits.
+                                                                                                                                                   : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:90: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                   : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:140: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_2' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:140: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:190: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_3' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:190: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:240: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_4' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:240: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:290: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_5' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:290: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:340: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_6' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:340: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:390: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_7' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:390: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:440: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_8' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:440: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:490: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_9' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:490: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:541: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_10' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:541: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:593: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_11' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:593: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:645: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_12' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:645: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:697: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_13' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:697: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:749: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_14' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:749: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:801: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_15' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:801: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:853: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_16' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:853: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:905: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_17' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:905: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:957: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_18' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:957: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                    : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:1009: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_19' generates 3 bits.
+                                                                                                                                                     : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:1009: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                     : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:1061: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_20' generates 3 bits.
+                                                                                                                                                     : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:1061: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                     : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:1113: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_21' generates 3 bits.
+                                                                                                                                                     : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:1113: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                     : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:1165: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_22' generates 3 bits.
+                                                                                                                                                     : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:1165: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                     : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:1217: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_23' generates 3 bits.
+                                                                                                                                                     : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:1217: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                     : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:1269: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_24' generates 3 bits.
+                                                                                                                                                     : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:1269: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                     : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:1321: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_25' generates 3 bits.
+                                                                                                                                                     : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:1321: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                     : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:1373: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_26' generates 3 bits.
+                                                                                                                                                     : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:1373: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                     : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:1425: Operator COND expects 32 or 5 bits on the Conditional True, but Conditional True's VARREF 'tgtPages_27' generates 3 bits.
+                                                                                                                                                     : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/BTB.sv:987:1425: Operator COND expects 32 or 5 bits on the Conditional False, but Conditional False's CONST '3'h0' generates 3 bits.
+                                                                                                                                                     : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.frontend.btb'
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/AsyncQueueSink_Phit.sv:127:27: Operator XOR expects 32 or 6 bits on the LHS, but LHS's VARREF '_index_T' generates 3 bits.
+                                                                                                                                                                   : ... note: In instance 'TestDriver.testHarness.chiptop0.system.serial_tl_domain.phy.in_phits_in_async_4.sink'
+  127 |     .io_d  (_GEN[_index_T ^ {ridx_incremented[3], 2'h0}]),  
+      |                           ^
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/AsyncQueueSink_Phit.sv:127:27: Operator XOR expects 32 or 6 bits on the RHS, but RHS's REPLICATE generates 3 bits.
+                                                                                                                                                                   : ... note: In instance 'TestDriver.testHarness.chiptop0.system.serial_tl_domain.phy.in_phits_in_async_4.sink'
+  127 |     .io_d  (_GEN[_index_T ^ {ridx_incremented[3], 2'h0}]),  
+      |                           ^
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/TLWidthWidget1.sv:241:56: Operator COND expects 32 or 4 bits on the Conditional True, but Conditional True's VARREF 'repeat_sel_sel_sources_0' generates 3 bits.
+                                                                                                                                                              : ... note: In instance 'TestDriver.testHarness.chiptop0.system.fbus.coupler_from_debug_sb.widget'
+  241 |   assign auto_anon_in_d_bits_data = _GEN[(repeat_first ? repeat_sel_sel_sources_0 : repeat_sel_hold_r) & _repeat_limit_T[2:0] | repeat_count];  
+      |                                                        ^
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/TLWidthWidget1.sv:241:56: Operator COND expects 32 or 4 bits on the Conditional False, but Conditional False's VARREF 'repeat_sel_hold_r' generates 3 bits.
+                                                                                                                                                              : ... note: In instance 'TestDriver.testHarness.chiptop0.system.fbus.coupler_from_debug_sb.widget'
+  241 |   assign auto_anon_in_d_bits_data = _GEN[(repeat_first ? repeat_sel_sel_sources_0 : repeat_sel_hold_r) & _repeat_limit_T[2:0] | repeat_count];  
+      |                                                        ^
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/TLWidthWidget1.sv:241:104: Operator AND expects 32 or 4 bits on the RHS, but RHS's SEL generates 3 bits.
+                                                                                                                                                               : ... note: In instance 'TestDriver.testHarness.chiptop0.system.fbus.coupler_from_debug_sb.widget'
+  241 |   assign auto_anon_in_d_bits_data = _GEN[(repeat_first ? repeat_sel_sel_sources_0 : repeat_sel_hold_r) & _repeat_limit_T[2:0] | repeat_count];  
+      |                                                                                                        ^
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/TLWidthWidget1.sv:241:127: Operator OR expects 32 or 4 bits on the RHS, but RHS's VARREF 'repeat_count' generates 3 bits.
+                                                                                                                                                               : ... note: In instance 'TestDriver.testHarness.chiptop0.system.fbus.coupler_from_debug_sb.widget'
+  241 |   assign auto_anon_in_d_bits_data = _GEN[(repeat_first ? repeat_sel_sel_sources_0 : repeat_sel_hold_r) & _repeat_limit_T[2:0] | repeat_count];  
+      |                                                                                                                               ^
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Rocket.sv:1322:43: Operator COND expects 32 or 7 bits on the Conditional True, but Conditional True's CONST '2'h3' generates 2 bits.
+                                                                                                                                                       : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.core'
+ 1322 |       mem_reg_rs2 <= _GEN_15[ex_ctrl_rocc ? 2'h3 : ex_reg_mem_size];  
+      |                                           ^
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/Rocket.sv:1322:43: Operator COND expects 32 or 7 bits on the Conditional False, but Conditional False's VARREF 'ex_reg_mem_size' generates 2 bits.
+                                                                                                                                                       : ... note: In instance 'TestDriver.testHarness.chiptop0.system.tile_prci_domain.element_reset_domain_rockettile.core'
+ 1322 |       mem_reg_rs2 <= _GEN_15[ex_ctrl_rocc ? 2'h3 : ex_reg_mem_size];  
+      |                                           ^
+%Warning-WIDTHTRUNC: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/ram_2x116.sv:26:24: Bit extraction of var[127:0] requires 7 bit index, not 8 bits.
+                                                                                                                                                       : ... note: In instance 'TestDriver.testHarness.ram.buffer.nodeOut_a_q.ram_ext'
+   26 |             _RANDOM_MEM[j +: 32] = $random;  
+      |                        ^
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/AsyncQueueSink_Phit_TestHarness_UNIQUIFIED.sv:127:27: Operator XOR expects 32 or 6 bits on the LHS, but LHS's VARREF '_index_T' generates 3 bits.
+                                                                                                                                                                                          : ... note: In instance 'TestDriver.testHarness.ram.phy.in_phits_in_async_4.sink'
+  127 |     .io_d  (_GEN[_index_T ^ {ridx_incremented[3], 2'h0}]),  
+      |                           ^
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/AsyncQueueSink_Phit_TestHarness_UNIQUIFIED.sv:127:27: Operator XOR expects 32 or 6 bits on the RHS, but RHS's REPLICATE generates 3 bits.
+                                                                                                                                                                                          : ... note: In instance 'TestDriver.testHarness.ram.phy.in_phits_in_async_4.sink'
+  127 |     .io_d  (_GEN[_index_T ^ {ridx_incremented[3], 2'h0}]),  
+      |                           ^
+%Warning-WIDTHEXPAND: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/SimDRAM.v:166:19: Operator FUNCREF 'memory_init' expects 64 bits on the Function Argument, but Function Argument's VARREF 'MEM_BASE' generates 40 bits.
+                                                                                                                                                      : ... note: In instance 'TestDriver.testHarness.simdram'
+  166 |         channel = memory_init(CHIP_ID, MEM_SIZE, WORD_SIZE, LINE_SIZE, ID_BITS, CLOCK_HZ, MEM_BASE, ADDR_BITS);
+      |                   ^~~~~~~~~~~
+%Warning-WIDTHEXPAND: /home/ray/chipyard/generators/radiance/src/main/resources/vsrc/vortex/third_party/fpnew/src/fpnew_pkg.sv:102:9: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's ENUMITEMREF 'INT8' generates 2 bits.
+                                                                                                                                    : ... note: In instance 'TestDriver'
+  102 |         return INT8;
+      |         ^~~~~~
+%Warning-WIDTHEXPAND: /home/ray/chipyard/generators/radiance/src/main/resources/vsrc/vortex/third_party/fpnew/src/fpnew_pkg.sv:307:25: Operator SUB expects 32 or 7 bits on the RHS, but RHS's VARREF 'fmt' generates 3 bits.
+                                                                                                                                     : ... note: In instance 'TestDriver'
+  307 |     return FP_ENCODINGS[fmt].exp_bits + FP_ENCODINGS[fmt].man_bits + 1;
+      |                         ^~~
+%Warning-WIDTHEXPAND: /home/ray/chipyard/generators/radiance/src/main/resources/vsrc/vortex/third_party/fpnew/src/fpnew_pkg.sv:307:54: Operator SUB expects 32 or 7 bits on the RHS, but RHS's VARREF 'fmt' generates 3 bits.
+                                                                                                                                     : ... note: In instance 'TestDriver'
+  307 |     return FP_ENCODINGS[fmt].exp_bits + FP_ENCODINGS[fmt].man_bits + 1;
+      |                                                      ^~~
+%Warning-WIDTHEXPAND: /home/ray/chipyard/generators/radiance/src/main/resources/vsrc/vortex/third_party/fpnew/src/fpnew_pkg.sv:330:25: Operator SUB expects 32 or 7 bits on the RHS, but RHS's VARREF 'fmt' generates 3 bits.
+                                                                                                                                     : ... note: In instance 'TestDriver'
+  330 |     return FP_ENCODINGS[fmt].exp_bits;
+      |                         ^~~
+%Warning-WIDTHEXPAND: /home/ray/chipyard/generators/radiance/src/main/resources/vsrc/vortex/third_party/fpnew/src/fpnew_pkg.sv:335:25: Operator SUB expects 32 or 7 bits on the RHS, but RHS's VARREF 'fmt' generates 3 bits.
+                                                                                                                                     : ... note: In instance 'TestDriver'
+  335 |     return FP_ENCODINGS[fmt].man_bits;
+      |                         ^~~
+%Warning-WIDTHEXPAND: /home/ray/chipyard/generators/radiance/src/main/resources/vsrc/vortex/third_party/fpnew/src/fpnew_pkg.sv:340:39: Operator SUB expects 32 or 7 bits on the RHS, but RHS's VARREF 'fmt' generates 3 bits.
+                                                                                                                                     : ... note: In instance 'TestDriver'
+  340 |     return unsigned'(2**(FP_ENCODINGS[fmt].exp_bits-1)-1);  
+      |                                       ^~~
+%Warning-LATCH: /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/EICG_wrapper.v:12:3: Latch inferred for signal 'TestDriver.testHarness.chiptop0.gated_clock_debug_clock_gate.en_latched' (not all control paths of combinational always assign a value)
+                                                                                                                                                   : ... Suggest use of always_latch for intentional latches
+   12 |   always @(*) begin
+      |   ^~~~~~
+/home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/SimDRAM.cc: In function 'void* memory_init(int, long long int, long long int, long long int, long long int, long long int, long long int, int)':
+/home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/SimDRAM.cc:87:52: warning: narrowing conversion of 'mem_size' from 'long long int' to 'size_t' {aka 'long unsigned int'} [-Wnarrowing]
+   87 |       backing_mem_data[chip_id][mem_base] = {data, mem_size};
+      |                                                    ^~~~~~~~
+/home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/uart.cc:7: warning: "_XOPEN_SOURCE" redefined
+    7 | #define _XOPEN_SOURCE
+      | 
+In file included from /home/ray/chipyard/.conda-env/x86_64-conda-linux-gnu/sysroot/usr/include/signal.h:25,
+                 from /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/uart.h:4,
+                 from /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/gen-collateral/uart.cc:3:
+/home/ray/chipyard/.conda-env/x86_64-conda-linux-gnu/sysroot/usr/include/features.h:214: note: this is the location of the previous definition
+  214 | # define _XOPEN_SOURCE  700
+      | 

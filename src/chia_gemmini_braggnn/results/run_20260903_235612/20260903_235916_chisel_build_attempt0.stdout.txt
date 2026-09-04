@@ -1,0 +1,195 @@
+mkdir -p /home/ray/chipyard/.classpath_cache/
+mkdir -p /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/
+make -C /home/ray/chipyard/tools/DRAMSim2 libdramsim.a
+cd /home/ray/chipyard && java -jar /home/ray/chipyard/scripts/sbt-launch.jar -Dsbt.ivy.home=/home/ray/chipyard/.ivy2 -Dsbt.global.base=/home/ray/chipyard/.sbt -Dsbt.boot.directory=/home/ray/chipyard/.sbt/boot/ -Dsbt.color=always -Dsbt.supershell=false -Dsbt.server.forcestart=true ";project chipyard; set assembly / assemblyOutputPath := file(\"/home/ray/chipyard/.classpath_cache/chipyard.jar\"); assembly" && touch /home/ray/chipyard/.classpath_cache/chipyard.jar
+echo "emittedLineLength=2048,noAlwaysComb,disallowLocalVariables,verifLabels,disallowPortDeclSharing,locationInfoStyle=wrapInAtSquareBracket" > /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/.mfc_lowering_options
+make[1]: Entering directory '/home/ray/chipyard/tools/DRAMSim2'
+g++ -DNO_STORAGE -Wall -DDEBUG_BUILD  -O3  -o AddressMapping.o -c AddressMapping.cpp
+g++ -DNO_STORAGE -Wall -DDEBUG_BUILD  -O3  -o Bank.o -c Bank.cpp
+g++ -DNO_STORAGE -Wall -DDEBUG_BUILD  -O3  -o BankState.o -c BankState.cpp
+g++ -DNO_STORAGE -Wall -DDEBUG_BUILD  -O3  -o BusPacket.o -c BusPacket.cpp
+g++ -DNO_STORAGE -Wall -DDEBUG_BUILD  -O3  -o ClockDomain.o -c ClockDomain.cpp
+g++ -DNO_STORAGE -Wall -DDEBUG_BUILD  -O3  -o CommandQueue.o -c CommandQueue.cpp
+g++ -DNO_STORAGE -Wall -DDEBUG_BUILD  -O3  -o IniReader.o -c IniReader.cpp
+g++ -DNO_STORAGE -Wall -DDEBUG_BUILD  -O3  -o MemoryController.o -c MemoryController.cpp
+[0m[[0m[0minfo[0m] [0m[0mwelcome to sbt 1.8.2 (N/A Java 20.0.2-internal)[0m
+g++ -DNO_STORAGE -Wall -DDEBUG_BUILD  -O3  -o MemorySystem.o -c MemorySystem.cpp
+g++ -DNO_STORAGE -Wall -DDEBUG_BUILD  -O3  -o MultiChannelMemorySystem.o -c MultiChannelMemorySystem.cpp
+g++ -DNO_STORAGE -Wall -DDEBUG_BUILD  -O3  -o PrintMacros.o -c PrintMacros.cpp
+g++ -DNO_STORAGE -Wall -DDEBUG_BUILD  -O3  -o Rank.o -c Rank.cpp
+g++ -DNO_STORAGE -Wall -DDEBUG_BUILD  -O3  -o SimulatorObject.o -c SimulatorObject.cpp
+g++ -DNO_STORAGE -Wall -DDEBUG_BUILD  -O3  -o Transaction.o -c Transaction.cpp
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project chipyard-build from plugins.sbt ...[0m
+ar crs libdramsim.a AddressMapping.o Bank.o BankState.o BusPacket.o ClockDomain.o CommandQueue.o IniReader.o MemoryController.o MemorySystem.o MultiChannelMemorySystem.o PrintMacros.o Rank.o SimulatorObject.o Transaction.o
+make[1]: Leaving directory '/home/ray/chipyard/tools/DRAMSim2'
+[0m[[0m[0minfo[0m] [0m[0mloading project definition from /home/ray/chipyard/project[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project chipyardRoot from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project barf from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project constellation from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project icenet from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project cva6 from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project ibex from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project sodor from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project radiance from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project midas_target_utils from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mresolving key references (48737 settings) ...[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyardRoot (in build file:/home/ray/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyard (in build file:/home/ray/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0mDefining assembly / assemblyOutputPath[0m
+[0m[[0m[0minfo[0m] [0m[0mThe new value will be used by assembly[0m
+[0m[[0m[0minfo[0m] [0m[0mReapplying settings...[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyard (in build file:/home/ray/chipyard/)[0m
+[0m[[0m[31merror[0m] [0m[0mPicked up JAVA_TOOL_OPTIONS: -Xmx8G -Xss8M -Djava.io.tmpdir=/home/ray/chipyard/.java_tmp[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 7 Scala sources to /home/ray/chipyard/sims/firesim/sim/midas/targetutils/target/scala-2.13/classes ...[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/InstrumentationPredication.scala:7:8: Importing from firrtl is deprecated as of Chisel's 3.6.0 release.[0m
+[0m[[0m[33mwarn[0m] [0m[0mimport firrtl.annotations.{ReferenceTarget, SingleTargetAnnotation}[0m
+[0m[[0m[33mwarn[0m] [0m[0m       ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/annotations.scala:24:8: Importing from firrtl is deprecated as of Chisel's 3.6.0 release.[0m
+[0m[[0m[33mwarn[0m] [0m[0mimport firrtl.RenameMap[0m
+[0m[[0m[33mwarn[0m] [0m[0m       ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/annotations.scala:25:8: Importing from firrtl is deprecated as of Chisel's 3.6.0 release.[0m
+[0m[[0m[33mwarn[0m] [0m[0mimport firrtl.annotations.{[0m
+[0m[[0m[33mwarn[0m] [0m[0m       ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/xdc/RAMStyleHint.scala:6:8: Importing from firrtl is deprecated as of Chisel's 3.6.0 release.[0m
+[0m[[0m[33mwarn[0m] [0m[0mimport firrtl.annotations.ReferenceTarget[0m
+[0m[[0m[33mwarn[0m] [0m[0m       ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/xdc/XDCAnnotation.scala:7:8: Importing from firrtl is deprecated as of Chisel's 3.6.0 release.[0m
+[0m[[0m[33mwarn[0m] [0m[0mimport firrtl.RenameMap[0m
+[0m[[0m[33mwarn[0m] [0m[0m       ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/xdc/XDCAnnotation.scala:8:8: Importing from firrtl is deprecated as of Chisel's 3.6.0 release.[0m
+[0m[[0m[33mwarn[0m] [0m[0mimport firrtl.annotations.{Annotation, HasSerializationHints, NoTargetAnnotation, ReferenceTarget}[0m
+[0m[[0m[33mwarn[0m] [0m[0m       ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/InstrumentationPredication.scala:51:5: method apply in object annotate is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m    annotate(new ChiselAnnotation { def toFirrtl = GlobalResetCondition(condition.toTarget) })[0m
+[0m[[0m[33mwarn[0m] [0m[0m    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/InstrumentationPredication.scala:51:18: trait ChiselAnnotation in package experimental is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m    annotate(new ChiselAnnotation { def toFirrtl = GlobalResetCondition(condition.toTarget) })[0m
+[0m[[0m[33mwarn[0m] [0m[0m                 ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/InstrumentationPredication.scala:59:42: method apply in object annotate is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m  def sink(target: chisel3.Bool): Unit = annotate(new ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                         ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/InstrumentationPredication.scala:59:55: trait ChiselAnnotation in package experimental is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m  def sink(target: chisel3.Bool): Unit = annotate(new ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                      ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/annotations.scala:38:54: trait ChiselAnnotation in package experimental is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0mcase class FpgaDebugAnnotation(target: Data) extends ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                     ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/annotations.scala:49:24: method apply in object annotate is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m    targets.map({ t => annotate(FpgaDebugAnnotation(t)) })[0m
+[0m[[0m[33mwarn[0m] [0m[0m                       ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/annotations.scala:90:5: method apply in object annotate is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m    annotate(new ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/annotations.scala:90:18: trait ChiselAnnotation in package experimental is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m    annotate(new ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                 ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/annotations.scala:146:60: trait ChiselAnnotation in package experimental is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0mcase class FAMEModelAnnotation(target: BaseModule) extends ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                           ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/annotations.scala:163:76: trait ChiselAnnotation in package experimental is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0mcase class EnableModelMultiThreadingAnnotation(target: BaseModule) extends ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                           ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/annotations.scala:182:76: trait ChiselAnnotation in package experimental is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0mcase class ExcludeFromMultiThreadingAnnotation(target: BaseModule) extends ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                           ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/annotations.scala:201:70: trait ChiselAnnotation in package experimental is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0mcase class MemModelAnnotation[T <: Data](target: MemBase[T]) extends ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                     ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/annotations.scala:214:40: trait ChiselAnnotation in package experimental is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m  def apply(target: (String, String)): ChiselAnnotation =[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                       ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/annotations.scala:215:9: trait ChiselAnnotation in package experimental is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m    new ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m        ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/annotations.scala:267:75: trait ChiselAnnotation in package experimental is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0mcase class AutoCounterCoverModuleAnnotation(target: ModuleTarget) extends ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                                          ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/annotations.scala:283:5: method apply in object annotate is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m    annotate(new ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/annotations.scala:283:18: trait ChiselAnnotation in package experimental is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m    annotate(new ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                 ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/annotations.scala:356:5: method apply in object annotate is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m    annotate(new ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/annotations.scala:356:18: trait ChiselAnnotation in package experimental is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m    annotate(new ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                 ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/annotations.scala:419:5: method apply in object annotate is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m    annotate(new ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/annotations.scala:419:18: trait ChiselAnnotation in package experimental is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m    annotate(new ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                 ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/annotations.scala:481:5: method apply in object annotate is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m    annotate(new ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/annotations.scala:481:18: trait ChiselAnnotation in package experimental is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m    annotate(new ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                 ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/annotations.scala:529:5: method apply in object annotate is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m    annotate(new ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/annotations.scala:529:18: trait ChiselAnnotation in package experimental is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m    annotate(new ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                 ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/xdc/QSFPPortLocHint.scala:23:26: method apply in object annotate is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m    chisel3.experimental.annotate(new ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                         ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/xdc/QSFPPortLocHint.scala:23:39: trait ChiselAnnotation in package experimental is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m    chisel3.experimental.annotate(new ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                      ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/xdc/RAMStyleHint.scala:51:26: method apply in object annotate is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m    chisel3.experimental.annotate(new ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                         ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/xdc/RAMStyleHint.scala:51:39: trait ChiselAnnotation in package experimental is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m    chisel3.experimental.annotate(new ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                      ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/xdc/XDCAnnotation.scala:89:26: method apply in object annotate is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m    chisel3.experimental.annotate(new ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                         ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/xdc/XDCAnnotation.scala:89:39: trait ChiselAnnotation in package experimental is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m    chisel3.experimental.annotate(new ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                      ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/xdc/XDCAnnotation.scala:105:26: method apply in object annotate is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m    chisel3.experimental.annotate(new ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                         ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/ray/chipyard/sims/firesim/sim/midas/targetutils/src/main/scala/midas/xdc/XDCAnnotation.scala:105:39: trait ChiselAnnotation in package experimental is deprecated (since Chisel 6.7.0): Avoid custom annotations. If you must use annotations, use annotate.apply method that takes Data[0m
+[0m[[0m[33mwarn[0m] [0m[0m    chisel3.experimental.annotate(new ChiselAnnotation {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                      ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m2 feature warnings; re-run with -feature for details[0m
+[0m[[0m[33mwarn[0m] [0m[0m40 warnings found[0m
+[0m[[0m[0minfo[0m] [0m[0mdone compiling[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 3 Scala sources to /home/ray/chipyard/generators/gemmini/src/target/scala-2.13/classes ...[0m
+[0m[[0m[31merror[0m] [0m[0m/home/ray/chipyard/generators/gemmini/src/main/scala/gemmini/CustomSoCConfigs.scala:10:16: object config is not a member of package chipyard[0m
+[0m[[0m[31merror[0m] [0m[0m  new chipyard.config.WithL2TLBs(512) ++[0m
+[0m[[0m[31merror[0m] [0m[0m               ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/ray/chipyard/generators/gemmini/src/main/scala/gemmini/CustomSoCConfigs.scala:12:38: type WithInclusiveCache is not a member of package freechips.rocketchip.subsystem[0m
+[0m[[0m[31merror[0m] [0m[0m  new freechips.rocketchip.subsystem.WithInclusiveCache([0m
+[0m[[0m[31merror[0m] [0m[0m                                     ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/ray/chipyard/generators/gemmini/src/main/scala/gemmini/CustomSoCConfigs.scala:13:5: not found: value nWays[0m
+[0m[[0m[31merror[0m] [0m[0m    nWays = 8,[0m
+[0m[[0m[31merror[0m] [0m[0m    ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/ray/chipyard/generators/gemmini/src/main/scala/gemmini/CustomSoCConfigs.scala:14:5: not found: value capacityKB[0m
+[0m[[0m[31merror[0m] [0m[0m    capacityKB = 512,[0m
+[0m[[0m[31merror[0m] [0m[0m    ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/ray/chipyard/generators/gemmini/src/main/scala/gemmini/CustomSoCConfigs.scala:15:5: not found: value outerLatencyCycles[0m
+[0m[[0m[31merror[0m] [0m[0m    outerLatencyCycles = 40,[0m
+[0m[[0m[31merror[0m] [0m[0m    ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/ray/chipyard/generators/gemmini/src/main/scala/gemmini/CustomSoCConfigs.scala:16:5: not found: value subBankingFactor[0m
+[0m[[0m[31merror[0m] [0m[0m    subBankingFactor = 4[0m
+[0m[[0m[31merror[0m] [0m[0m    ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/ray/chipyard/generators/gemmini/src/main/scala/gemmini/CustomSoCConfigs.scala:20:16: object CustomGemmminiCPUConfigs is not a member of package chipyard[0m
+[0m[[0m[31merror[0m] [0m[0m  new chipyard.CustomGemmminiCPUConfigs.CustomCPU(1) ++[0m
+[0m[[0m[31merror[0m] [0m[0m               ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/ray/chipyard/generators/gemmini/src/main/scala/gemmini/CustomSoCConfigs.scala:22:16: object config is not a member of package chipyard[0m
+[0m[[0m[31merror[0m] [0m[0m  new chipyard.config.WithSystemBusWidth(GemminiCustomConfigs.customConfig.dma_buswidth) ++[0m
+[0m[[0m[31merror[0m] [0m[0m               ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/ray/chipyard/generators/gemmini/src/main/scala/gemmini/CustomSoCConfigs.scala:23:16: object config is not a member of package chipyard[0m
+[0m[[0m[31merror[0m] [0m[0m  new chipyard.config.AbstractConfig[0m
+[0m[[0m[31merror[0m] [0m[0m               ^[0m
+[0m[[0m[31merror[0m] [0m[0m9 errors found[0m
+[0m[[0m[31merror[0m] [0m[0m(gemmini / Compile / [31mcompileIncremental[0m) Compilation failed[0m
+[0m[[0m[31merror[0m] [0m[0mTotal time: 31 s, completed Sep 3, 2026, 9:59:15 PM[0m
+[0J

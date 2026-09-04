@@ -1,0 +1,35 @@
+# AlphaEvolve config.
+# Uses Google's AlphaEvolve cloud API as the search backend.
+#
+# Usage:  python run_flow.py --config config_alphaevolve.yaml
+
+max_iterations: 2        # maps to max_programs_evaluated in the backend
+log_level: "INFO"
+file_suffix: ".cc"
+
+search:
+  type: "alphaevolve"
+  # Islands / MAP-Elites are managed server-side by AlphaEvolve;
+  # no client-side island config (cf. search.database.num_islands in AdaEvolve).
+
+# AlphaEvolve backend settings (parsed by the bridge from raw YAML,
+# since Config.from_dict drops unknown top-level sections).
+alphaevolve:
+  project_id: "${GCP_PROJECT}"
+  engine_id: "alpha-evolve-experiment-engine"
+  credentials_file: "application_default_credentials.json"
+  concurrency: 3          # server-side: programs generated in parallel (sweet spot: 3-12)
+  num_samplers: 1         # client-side: async tasks polling for new candidates
+  num_evaluators: 3       # client-side: async tasks running evaluations concurrently
+  idle_timeout_s: 1800
+
+prompt:
+  system_message: |
+    You are an expert computer architect designing AI accelerators for BraggNN
+    inferences. Your goal is to minimize single batch latency of BraggNN inference
+    utiliting Gemmini based on hardware/software co-design.
+
+monitor:
+  enabled: true
+  host: "127.0.0.1"
+  port: 8765

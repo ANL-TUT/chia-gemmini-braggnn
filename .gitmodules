@@ -1,0 +1,9 @@
+[submodule "chia"]
+	path = chia
+	url = https://github.com/ucb-bar/chia
+[submodule "alphaevolve-on-googlecloud"]
+	path = alphaevolve-on-googlecloud
+	url = https://github.com/Google-Cloud-AI/alphaevolve-on-googlecloud
+[submodule "evolve-flows"]
+	path = evolve-flows
+	url = https://github.com/ucb-bar/evolve-flows

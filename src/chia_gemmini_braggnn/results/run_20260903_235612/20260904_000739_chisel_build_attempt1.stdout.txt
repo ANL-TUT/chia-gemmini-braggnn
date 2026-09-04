@@ -1,0 +1,56 @@
+mkdir -p /home/ray/chipyard/.classpath_cache/
+mkdir -p /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/
+cd /home/ray/chipyard && java -jar /home/ray/chipyard/scripts/sbt-launch.jar -Dsbt.ivy.home=/home/ray/chipyard/.ivy2 -Dsbt.global.base=/home/ray/chipyard/.sbt -Dsbt.boot.directory=/home/ray/chipyard/.sbt/boot/ -Dsbt.color=always -Dsbt.supershell=false -Dsbt.server.forcestart=true ";project chipyard; set assembly / assemblyOutputPath := file(\"/home/ray/chipyard/.classpath_cache/chipyard.jar\"); assembly" && touch /home/ray/chipyard/.classpath_cache/chipyard.jar
+echo "emittedLineLength=2048,noAlwaysComb,disallowLocalVariables,verifLabels,disallowPortDeclSharing,locationInfoStyle=wrapInAtSquareBracket" > /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/.mfc_lowering_options
+[0m[[0m[0minfo[0m] [0m[0mwelcome to sbt 1.8.2 (N/A Java 20.0.2-internal)[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project chipyard-build from plugins.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading project definition from /home/ray/chipyard/project[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project chipyardRoot from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project barf from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project constellation from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project icenet from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project cva6 from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project ibex from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project sodor from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project radiance from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project midas_target_utils from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mresolving key references (48737 settings) ...[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyardRoot (in build file:/home/ray/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyard (in build file:/home/ray/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0mDefining assembly / assemblyOutputPath[0m
+[0m[[0m[0minfo[0m] [0m[0mThe new value will be used by assembly[0m
+[0m[[0m[0minfo[0m] [0m[0mReapplying settings...[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyard (in build file:/home/ray/chipyard/)[0m
+[0m[[0m[33mwarn[0m] [0m[0mmultiple main classes detected: run 'show discoveredMainClasses' to see the list[0m
+[0m[[0m[0minfo[0m] [0m[0mAssembly jar up to date: /home/ray/chipyard/generators/chipyard/target/scala-2.13/chipyard-assembly-1.6.jar[0m
+[0m[[0m[32msuccess[0m] [0m[0mTotal time: 9 s, completed Sep 3, 2026, 10:07:17 PM[0m
+[0Jmkdir -p /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig
+mkdir -p /home/ray/chipyard/.classpath_cache/
+(set -o pipefail && 	cd /home/ray/chipyard && java -cp /home/ray/chipyard/.classpath_cache/chipyard.jar chipyard.Generator  --target-dir /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig --name chipyard.harness.TestHarness.GemminiRocketConfig --top-module chipyard.harness.TestHarness --legacy-configs chipyard:GemminiRocketConfig   | tee /home/ray/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.GemminiRocketConfig/chipyard.harness.TestHarness.GemminiRocketConfig.chisel.log)
+cd /home/ray/chipyard && java -jar /home/ray/chipyard/scripts/sbt-launch.jar -Dsbt.ivy.home=/home/ray/chipyard/.ivy2 -Dsbt.global.base=/home/ray/chipyard/.sbt -Dsbt.boot.directory=/home/ray/chipyard/.sbt/boot/ -Dsbt.color=always -Dsbt.supershell=false -Dsbt.server.forcestart=true ";project tapeout; set assembly / assemblyOutputPath := file(\"/home/ray/chipyard/.classpath_cache/tapeout.jar\"); assembly" && touch /home/ray/chipyard/.classpath_cache/tapeout.jar
+[0m[[0m[0minfo[0m] [0m[0mwelcome to sbt 1.8.2 (N/A Java 20.0.2-internal)[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project chipyard-build from plugins.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading project definition from /home/ray/chipyard/project[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project chipyardRoot from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project barf from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project constellation from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project icenet from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project cva6 from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project ibex from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project sodor from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project radiance from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project midas_target_utils from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mresolving key references (48737 settings) ...[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to chipyardRoot (in build file:/home/ray/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to tapeout (in build file:/home/ray/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0mDefining assembly / assemblyOutputPath[0m
+[0m[[0m[0minfo[0m] [0m[0mThe new value will be used by assembly[0m
+[0m[[0m[0minfo[0m] [0m[0mReapplying settings...[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to tapeout (in build file:/home/ray/chipyard/)[0m
+[0m[[0m[0minfo[0m] [0m[0m185 file(s) merged using strategy 'Rename (Custom)' (Run the task at debug level to see the details)[0m
+[0m[[0m[0minfo[0m] [0m[0m4 file(s) merged using strategy 'Rename' (Run the task at debug level to see the details)[0m
+[0m[[0m[0minfo[0m] [0m[0m331 file(s) merged using strategy 'Discard' (Run the task at debug level to see the details)[0m
+[0m[[0m[0minfo[0m] [0m[0mBuilt: /home/ray/chipyard/.classpath_cache/tapeout.jar[0m
+[0m[[0m[0minfo[0m] [0m[0mJar hash: 7513cadd4631ca143d6fb1af65c6ad0a0f9645c4[0m
+[0m[[0m[32msuccess[0m] [0m[0mTotal time: 8 s, completed Sep 3, 2026, 10:07:39 PM[0m
+[0J
