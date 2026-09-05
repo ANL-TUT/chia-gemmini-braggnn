@@ -17,7 +17,7 @@ search:
 alphaevolve:
   project_id: "${GCP_PROJECT}"
   engine_id: "alpha-evolve-experiment-engine"
-  credentials_file: "application_default_credentials.json"
+  credentials_file: ""
   concurrency: 3          # server-side: programs generated in parallel (sweet spot: 3-12)
   num_samplers: 1         # client-side: async tasks polling for new candidates
   num_evaluators: 3       # client-side: async tasks running evaluations concurrently
