@@ -41,6 +41,33 @@ def reset_chipyard(chipyard_path: str) -> str:
     return (co.stdout + co.stderr + cl.stdout + cl.stderr).strip() or "clean"
 
 
+def _rev_parse(repo_path: str) -> str:
+    return subprocess.run(
+        ["git", "-C", repo_path, "rev-parse", "HEAD"],
+        capture_output=True, text=True,
+    ).stdout.strip()
+
+
+@ChiaFunction(resources={"chipyard": 0.01})
+def capture_chisel_baseline(
+    chipyard_path: str,
+    submodules: list[str] | None = None,
+) -> dict[str, str]:
+    """Capture HEAD commit hashes for the root repo + each submodule.
+
+    Call once, right after reset_chipyard, and reuse the same baseline for
+    every attempt's collect_chisel_diff -- submodules are never reset between
+    attempts (only the root repo is), so a submodule's HEAD keeps moving as
+    the LLM commits to it, and that's exactly what "cumulative diff" should
+    be measured against for the whole run, not just this one attempt.
+    """
+    submodules = submodules or []
+    baseline = {"": _rev_parse(chipyard_path)}
+    for sm in submodules:
+        baseline[sm] = _rev_parse(os.path.join(chipyard_path, sm))
+    return baseline
+
+
 def _untracked_diff(repo_path: str) -> str:
     """New-file diffs for untracked, non-ignored files in *repo_path*, read-only.
 
@@ -71,6 +98,7 @@ def _untracked_diff(repo_path: str) -> str:
 def collect_diff(
     chipyard_path: str,
     submodules: list[str] | None = None,
+    baseline: dict[str, str] | None = None,
 ) -> tuple[int, dict[str, str]]:
     """Collect the chipyard git diff: tracked modifications AND new untracked
     files, for the root repo and each listed submodule.
@@ -81,26 +109,30 @@ def collect_diff(
     = root chipyard). ``error=1`` if a listed submodule is missing.
     """
     submodules = submodules or []
+    baseline = baseline or {}
     for sm in submodules:
         if not os.path.exists(os.path.join(chipyard_path, sm, ".git")):
             return (1, {})
 
     diffs: dict[str, str] = {}
-    root = subprocess.run(
-        ["git", "-C", chipyard_path, "diff", "--ignore-submodules=all"],
-        capture_output=True, text=True,
-    ).stdout
+    root_cmd = ["git", "-C", chipyard_path, "diff", "--ignore-submodules=all"]
+    if baseline.get(""):
+        root_cmd.append(baseline[""])
+    root = subprocess.run(root_cmd, capture_output=True, text=True).stdout
     diffs[""] = root + _untracked_diff(chipyard_path)
     for sm in submodules:
         sm_path = os.path.join(chipyard_path, sm)
-        tracked = subprocess.run(
-            ["git", "-C", sm_path, "diff"], capture_output=True, text=True,
-        ).stdout
+        sm_cmd = ["git", "-C", sm_path, "diff"]
+        if baseline.get(sm):
+            sm_cmd.append(baseline[sm])
+        tracked = subprocess.run(sm_cmd, capture_output=True, text=True).stdout
         diffs[sm] = tracked + _untracked_diff(sm_path)
     return (0, diffs)
 
 
-def collect_chisel_diff(dump: Dumper, attempt: int) -> None:
+def collect_chisel_diff(
+    dump: Dumper, attempt: int, baseline: dict[str, str] | None = None,
+) -> None:
     """Capture the chipyard git diff for this iteration and dump it.
 
     Records the cumulative Chisel state that produced this attempt's build —
@@ -111,12 +143,14 @@ def collect_chisel_diff(dump: Dumper, attempt: int) -> None:
 
     collect_diff captures both tracked modifications and new untracked files
     (read-only) for the root + submodules, so the freshly written accelerator
-    (MemCopyRoCC.scala, tests/memcpy.c) shows up without any staging.
+    (MemCopyRoCC.scala, tests/memcpy.c) shows up without any staging. Pass
+    ``baseline`` (captured once via capture_chisel_baseline, right after
+    reset_chipyard) so committed submodule edits are captured too.
     """
     try:
         err, diffs = get(
             collect_diff.options(resources={"chipyard": 0.01}).chia_remote(
-                CHIPYARD_PATH, CHIPYARD_DIFF_SUBMODULES
+                CHIPYARD_PATH, CHIPYARD_DIFF_SUBMODULES, baseline
             )
         )
     except Exception as e:  # noqa: BLE001 - diagnostic only

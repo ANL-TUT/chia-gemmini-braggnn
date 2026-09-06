@@ -1,15 +1,11 @@
-"""BraggnnEvaluator -- Exo -> wrapper LLM -> Gemmini build -> Verilator run.
-
-See ~/repo/gemmini-braggnn/README.md for the underlying build/run commands
-this shells out to.
-"""
-
 import contextvars
 import os
 import re
 import subprocess
 from dataclasses import dataclass
 from typing import Any, List, Optional, Union
+
+import ray
 
 from chia.base.ChiaFunction import ChiaFunction, get
 from chia.models.opencode import OpenCodeLLM
@@ -182,6 +178,10 @@ class BraggnnEvaluator(ChiaEvaluator):
             **kwargs,
         )
 
+    def _log_evaluation(self, *args: Any, **kwargs: Any) -> None:
+        os.makedirs(self.output_dir, exist_ok=True)
+        super()._log_evaluation(*args, **kwargs)
+
     def _build(self, program_solution: str) -> Any:
         ok, exo_c, exo_stdout = get(
             _exo_compile.options(resources={"chipyard": 0.2}).chia_remote(
@@ -189,17 +189,17 @@ class BraggnnEvaluator(ChiaEvaluator):
             )
         )
         if not ok:
-            return BraggnnBuildResult(
+            return ray.put(BraggnnBuildResult(
                 success=False, binary_path="", exo_stdout=exo_stdout,
                 wrapper_success=False, build_stdout="", build_stderr="",
-            )
+            ))
 
         braggnn_c = _wrap_kernel(exo_c)
         if not braggnn_c:
-            return BraggnnBuildResult(
+            return ray.put(BraggnnBuildResult(
                 success=False, binary_path="", exo_stdout=exo_stdout,
                 wrapper_success=False, build_stdout="", build_stderr="",
-            )
+            ))
 
         return _gemmini_build.options(resources={"chipyard": 0.3}).chia_remote(braggnn_c)
 

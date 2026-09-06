@@ -1,1 +1,2 @@
-Change Gemmini systolic size to 8x8 from default 16x16.
+Your goal is to reduce single-batch BraggNN inference latency to 1 us. Current `braggnn.c` takes about 38 us, so you need to make 38x performance improvement without overfitting to the BraggNN workload. The high-level Gemmini C API including `tiled_matmul_auto` and `tiled_conv_auto` require Gemmini to write back per-kernel results into DRAM. It introduces significant bottleneck, therefore, you should try kernel fusion through implimenting new Gemmini C APIs with Exo. 
+Don't change RoCC interface and evaluation infrastructer such as FireSim, Verilator, and Chipyard.

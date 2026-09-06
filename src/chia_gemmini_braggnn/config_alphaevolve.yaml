@@ -15,8 +15,8 @@ search:
 # AlphaEvolve backend settings (parsed by the bridge from raw YAML,
 # since Config.from_dict drops unknown top-level sections).
 alphaevolve:
-  project_id: "${GCP_PROJECT}"
-  engine_id: "alpha-evolve-experiment-engine"
+  project_id: "GCP_PROJECT"
+  engine_id: "GE_APP_ID"
   credentials_file: ""
   concurrency: 3          # server-side: programs generated in parallel (sweet spot: 3-12)
   num_samplers: 1         # client-side: async tasks polling for new candidates

@@ -9,8 +9,8 @@ from chia.base.ChiaFunction import get
 from chia.base.tools.BashTool import BashTool
 
 from alphaevolve_flow import SEED_PROGRAM, run_alphaevolve_search
-from chipyard_ops import chisel_build, collect_chisel_diff, reset_chipyard
-from constants import CHIPYARD_PATH, DEFAULT_OUTPUT_BASE, MAX_ATTEMPTS, RUNTIME_ENV
+from chipyard_ops import capture_chisel_baseline, chisel_build, collect_chisel_diff, reset_chipyard
+from constants import CHIPYARD_DIFF_SUBMODULES, CHIPYARD_PATH, DEFAULT_OUTPUT_BASE, MAX_ATTEMPTS, RUNTIME_ENV
 from dumper import Dumper, dump_llm
 from llm import debug, implement, make_llm
 
@@ -42,6 +42,12 @@ def run_flow(
     )
     logger.info("Chipyard reset: %s", reset_out or "clean")
 
+    baseline = get(
+        capture_chisel_baseline.options(resources={"chipyard": 0.01}).chia_remote(
+            CHIPYARD_PATH, CHIPYARD_DIFF_SUBMODULES
+        )
+    )
+
     chipyard_bash = BashTool(
         name="chipyard_bash",
         work_dir=CHIPYARD_PATH,
@@ -67,7 +73,7 @@ def run_flow(
 
         chipyard_bash.stop()
 
-        collect_chisel_diff(dump, attempt)
+        collect_chisel_diff(dump, attempt, baseline)
         artifact = chisel_build(dump, attempt)
 
         if not artifact.success:

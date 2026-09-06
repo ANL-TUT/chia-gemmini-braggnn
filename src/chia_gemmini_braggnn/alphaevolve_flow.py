@@ -15,6 +15,7 @@ logger = logging.getLogger(__name__)
 
 DEFAULT_CONFIG = str(PACKAGE_DIR / "config_alphaevolve.yaml")
 EVOLVER_ACTOR_NAME = "braggnn-evolver"
+EVOLVER_NAMESPACE = "chia-gemmini-braggnn"
 SEED_PROGRAM = _EXO_SEED
 
 
@@ -43,7 +44,7 @@ def run_alphaevolve_search(
     actor_name = f"{EVOLVER_ACTOR_NAME}-attempt{attempt}"
 
     try:
-        stale = ray.get_actor(actor_name)
+        stale = ray.get_actor(actor_name, namespace=EVOLVER_NAMESPACE)
         logger.warning(
             "Found stale evolver actor '%s' from a previous run -- killing it",
             actor_name,
@@ -62,6 +63,7 @@ def run_alphaevolve_search(
     logger.info("Creating EvolverNode actor '%s'", actor_name)
     evolver = EvolverNode.options(
         name=actor_name,
+        namespace=EVOLVER_NAMESPACE,
         lifetime="detached",
         resources={"evolver": 1.0},
         runtime_env=RUNTIME_ENV,
@@ -69,6 +71,12 @@ def run_alphaevolve_search(
 
     with open(config_path) as f:
         config_content = f.read()
+    config_content = config_content.replace(
+        "GCP_PROJECT", os.environ.get("GCP_PROJECT", "")
+    )
+    config_content = config_content.replace(
+        "GE_APP_ID", os.environ.get("GE_APP_ID", "")
+    )
 
     evolver_input = EvolverInput(
         config_path=os.path.basename(config_path),

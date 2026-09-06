@@ -1,367 +1,620 @@
-# ruff: noqa: F821
+# ruff: noqa: F821, F823
+
 
 from __future__ import annotations
 
-from exo.libs.externs import expf, fmaxf, select
+from exo.frontend.syntax import f32, size
+from exo.libs.externs import fmaxf, select
 
 from exo import DRAM, proc
 
+__all__ = ["braggnn_inference_exo_impl"]
+
+
+def _fail_dummy() -> None:
+    raise SyntaxError("Exo Python dummy functions should never be called directly.")
+
+
+def seq(lo, hi):
+    """Sequential range helper for Exo loop bounds."""
+    _fail_dummy()
+
+
+class i8(int):
+    """Dummy type symbol used by Exo kernels for 8-bit integer tensors."""
+
+    def __init__(self, *_):
+        raise SyntaxError("Exo Python dummy objects should never be instantiated")
+
+
+class i32(int):
+    """Dummy type symbol used by Exo kernels for 32-bit integer tensors."""
+
+    def __init__(self, *_):
+        raise SyntaxError("Exo Python dummy objects should never be instantiated")
+
 
 @proc
-def conv2d(
-    mbsz: size,
-    ic: size,
-    oc: size,
-    ih: size,
-    iw: size,
-    oh: size,
-    ow: size,
-    kh: size,
-    kw: size,
-    x: f32[mbsz, ic, ih, iw] @ DRAM,
-    weight: f32[oc, ic, kh, kw] @ DRAM,
-    bias: f32[oc] @ DRAM,
-    out: f32[mbsz, oc, oh, ow] @ DRAM,
+def leaky_relu_requant(
+    d0: size,
+    d1: size,
+    d2: size,
+    values: i8[d0, d1, d2] @ DRAM,
+    scale: f32 @ DRAM,
 ):
-    assert ih >= oh + kh - 1
-    assert iw >= ow + kw - 1
-    for n in seq(0, mbsz):
-        for o in seq(0, oc):
-            for r in seq(0, oh):
-                for c in seq(0, ow):
-                    out[n, o, r, c] = bias[o]
-                    for i in seq(0, ic):
-                        for y in seq(0, kh):
-                            for k in seq(0, kw):
-                                out[n, o, r, c] += (
-                                    x[n, i, r + y, c + k] * weight[o, i, y, k]
-                                )
+    for i in seq(0, d0):
+        for j in seq(0, d1):
+            for k in seq(0, d2):
+                x: f32
+                val: f32
+                x = values[i, j, k]
+                val = select(0.0, x, x * scale, x * 0.01 * scale)
+                val = val + select(val, 0.0, -0.5, 0.5)
+                val = fmaxf(-128.0, select(val, 127.0, val, 127.0))
+                values[i, j, k] = val
 
 
 @proc
-def attention_scores(
-    mbsz: size,
-    ch: size,
-    h: size,
-    w: size,
-    theta: f32[mbsz, ch, h, w] @ DRAM,
-    phi: f32[mbsz, ch, h, w] @ DRAM,
-    out: f32[mbsz, h, w, h, w] @ DRAM,
+def cpu_conv2d(
+    in_h: size,
+    in_w: size,
+    in_ch: size,
+    out_ch: size,
+    kernel_size: size,
+    out_h: size,
+    out_w: size,
+    input: i8[in_h, in_w, in_ch] @ DRAM,
+    weights: i8[out_ch, kernel_size, kernel_size, in_ch] @ DRAM,
+    bias: i32[out_ch] @ DRAM,
+    output: i8[out_h, out_w, out_ch] @ DRAM,
+    acc_scale: f32 @ DRAM,
 ):
-    for n in seq(0, mbsz):
-        for r1 in seq(0, h):
-            for c1 in seq(0, w):
-                for r2 in seq(0, h):
-                    for c2 in seq(0, w):
-                        out[n, r1, c1, r2, c2] = 0.0
-                        for i in seq(0, ch):
-                            out[n, r1, c1, r2, c2] += (
-                                theta[n, i, r1, c1] * phi[n, i, r2, c2]
-                            )
+    assert in_h >= out_h + kernel_size - 1
+    assert in_w >= out_w + kernel_size - 1
+
+    for oh in seq(0, out_h):
+        for ow in seq(0, out_w):
+            for oc in seq(0, out_ch):
+                sum: i32
+                sum = bias[oc]
+
+                for kh in seq(0, kernel_size):
+                    for kw in seq(0, kernel_size):
+                        for ic in seq(0, in_ch):
+                            x: i32
+                            w: i32
+                            x = input[oh + kh, ow + kw, ic]
+                            w = weights[oc, kh, kw, ic]
+                            sum += x * w
+
+                val: f32
+                val = sum
+                val = val * acc_scale
+                val = val + select(val, 0.0, -0.5, 0.5)
+                val = fmaxf(-128.0, select(val, 127.0, val, 127.0))
+                output[oh, ow, oc] = val
 
 
 @proc
-def attention_softmax(
-    mbsz: size, h: size, w: size, values: f32[mbsz, h, w, h, w] @ DRAM
-):
-    assert h >= 1
-    assert w >= 1
-    for n in seq(0, mbsz):
-        for r1 in seq(0, h):
-            for c1 in seq(0, w):
-                maximum: f32 @ DRAM
-                denominator: f32 @ DRAM
-                maximum = values[n, r1, c1, 0, 0]
-                for r2 in seq(0, h):
-                    for c2 in seq(0, w):
-                        maximum = fmaxf(maximum, values[n, r1, c1, r2, c2])
-                denominator = 0.0
-                for r2 in seq(0, h):
-                    for c2 in seq(0, w):
-                        values[n, r1, c1, r2, c2] = expf(
-                            values[n, r1, c1, r2, c2] - maximum
-                        )
-                        denominator += values[n, r1, c1, r2, c2]
-                for r2 in seq(0, h):
-                    for c2 in seq(0, w):
-                        values[n, r1, c1, r2, c2] = (
-                            values[n, r1, c1, r2, c2] / denominator
-                        )
-
-
-@proc
-def attention_apply(
-    mbsz: size,
-    ch: size,
-    h: size,
-    w: size,
-    attention: f32[mbsz, h, w, h, w] @ DRAM,
-    g: f32[mbsz, ch, h, w] @ DRAM,
-    out: f32[mbsz, ch, h, w] @ DRAM,
-):
-    for n in seq(0, mbsz):
-        for i in seq(0, ch):
-            for r1 in seq(0, h):
-                for c1 in seq(0, w):
-                    out[n, i, r1, c1] = 0.0
-                    for r2 in seq(0, h):
-                        for c2 in seq(0, w):
-                            out[n, i, r1, c1] += (
-                                attention[n, r1, c1, r2, c2] * g[n, i, r2, c2]
-                            )
-
-
-@proc
-def residual_add(
-    mbsz: size,
-    ch: size,
-    h: size,
-    w: size,
-    values: f32[mbsz, ch, h, w] @ DRAM,
-    addend: f32[mbsz, ch, h, w] @ DRAM,
-):
-    for n in seq(0, mbsz):
-        for c in seq(0, ch):
-            for r in seq(0, h):
-                for k in seq(0, w):
-                    values[n, c, r, k] += addend[n, c, r, k]
-
-
-@proc
-def leaky_relu_map(
-    mbsz: size, ch: size, h: size, w: size, values: f32[mbsz, ch, h, w] @ DRAM
-):
-    for n in seq(0, mbsz):
-        for c in seq(0, ch):
-            for r in seq(0, h):
-                for k in seq(0, w):
-                    values[n, c, r, k] = select(
-                        values[n, c, r, k],
-                        0.0,
-                        values[n, c, r, k] * 0.01,
-                        values[n, c, r, k],
-                    )
-
-
-@proc
-def leaky_relu_vec(mbsz: size, features: size, values: f32[mbsz, features] @ DRAM):
-    for n in seq(0, mbsz):
-        for i in seq(0, features):
-            values[n, i] = select(values[n, i], 0.0, values[n, i] * 0.01, values[n, i])
-
-
-@proc
-def linear_from_map(
-    mbsz: size,
-    ch: size,
-    h: size,
-    w: size,
+def cpu_fc(
+    d0: size,
+    d1: size,
+    d2: size,
     out_features: size,
-    x: f32[mbsz, ch, h, w] @ DRAM,
-    weight: f32[out_features, ch, h, w] @ DRAM,
-    bias: f32[out_features] @ DRAM,
-    out: f32[mbsz, out_features] @ DRAM,
+    input: i8[d0, d1, d2] @ DRAM,
+    weights: i8[out_features, d0, d1, d2] @ DRAM,
+    bias: i32[out_features] @ DRAM,
+    output: i8[out_features, 1, 1] @ DRAM,
+    acc_scale: f32 @ DRAM,
 ):
-    for n in seq(0, mbsz):
-        for o in seq(0, out_features):
-            out[n, o] = bias[o]
-            for c in seq(0, ch):
-                for y in seq(0, h):
-                    for k in seq(0, w):
-                        out[n, o] += weight[o, c, y, k] * x[n, c, y, k]
+    # in_features = d0 * d1 * d2
+    for j in seq(0, out_features):
+        sum: i32
+        sum = bias[j]
+        for k0 in seq(0, d0):
+            for k1 in seq(0, d1):
+                for k2 in seq(0, d2):
+                    x: i32
+                    w: i32
+                    x = input[k0, k1, k2]
+                    w = weights[j, k0, k1, k2]
+                    sum += x * w
+        val: f32
+        val = sum
+        val = val * acc_scale
+        val = val + select(val, 0.0, -0.5, 0.5)
+        val = fmaxf(-128.0, select(val, 127.0, val, 127.0))
+        output[j, 0, 0] = val
 
 
 @proc
-def linear(
-    mbsz: size,
-    in_features: size,
-    out_features: size,
-    x: f32[mbsz, in_features] @ DRAM,
-    weight: f32[out_features, in_features] @ DRAM,
-    bias: f32[out_features] @ DRAM,
-    out: f32[mbsz, out_features] @ DRAM,
+def cpu_matmul_transA(
+    dim: size,
+    K: size,
+    A: i8[K, dim, dim] @ DRAM,
+    B: i8[K, dim, dim] @ DRAM,
+    C: i8[dim, dim, dim, dim] @ DRAM,
+    acc_scale: f32 @ DRAM,
 ):
-    for n in seq(0, mbsz):
-        for o in seq(0, out_features):
-            out[n, o] = bias[o]
-            for i in seq(0, in_features):
-                out[n, o] += weight[o, i] * x[n, i]
+    # M = N = dim * dim
+    for i1 in seq(0, dim):
+        for i2 in seq(0, dim):
+            for j1 in seq(0, dim):
+                for j2 in seq(0, dim):
+                    sum: i32
+                    sum = 0.0
+                    for k in seq(0, K):
+                        a: i32
+                        b: i32
+                        a = A[k, i1, i2]
+                        b = B[k, j1, j2]
+                        sum += a * b
+                    val: f32
+                    val = sum
+                    val = val * acc_scale
+                    val = val + select(val, 0.0, -0.5, 0.5)
+                    val = fmaxf(-128.0, select(val, 127.0, val, 127.0))
+                    C[i1, i2, j1, j2] = val
 
 
 @proc
-def braggnn_forward(
-    mbsz: size,
-    sz: size,
+def cpu_matmul_transB(
+    dim: size,
+    N: size,
+    A: i8[dim, dim, dim, dim] @ DRAM,
+    B: i8[N, dim, dim] @ DRAM,
+    C: i8[dim, dim, N] @ DRAM,
+    acc_scale: f32 @ DRAM,
+):
+    # M = K = dim * dim
+    for i1 in seq(0, dim):
+        for i2 in seq(0, dim):
+            for j in seq(0, N):
+                sum: i32
+                sum = 0.0
+                for k1 in seq(0, dim):
+                    for k2 in seq(0, dim):
+                        a: i32
+                        b: i32
+                        a = A[i1, i2, k1, k2]
+                        b = B[j, k1, k2]
+                        sum += a * b
+                val: f32
+                val = sum
+                val = val * acc_scale
+                val = val + select(val, 0.0, -0.5, 0.5)
+                val = fmaxf(-128.0, select(val, 127.0, val, 127.0))
+                C[i1, i2, j] = val
+
+
+@proc
+def cpu_resadd(
+    dim: size,
+    cols: size,
+    A_scale: f32 @ DRAM,
+    B_scale: f32 @ DRAM,
+    A: i8[dim, dim, cols] @ DRAM,
+    B: i8[dim, dim, cols] @ DRAM,
+    C: i8[dim, dim, cols] @ DRAM,
+):
+    # rows = dim * dim
+    for i1 in seq(0, dim):
+        for i2 in seq(0, dim):
+            for j in seq(0, cols):
+                a: f32
+                b: f32
+                val: f32
+                a = A[i1, i2, j]
+                b = B[i1, i2, j]
+                val = a * A_scale + b * B_scale
+                val = val + select(val, 0.0, -0.5, 0.5)
+                val = fmaxf(-128.0, select(val, 127.0, val, 127.0))
+                C[i1, i2, j] = val
+
+
+@proc
+def cpu_nlb(
+    dim: size,
     c0: size,
     ci: size,
-    c1: size,
-    c2: size,
-    f0: size,
-    f1: size,
-    f2: size,
-    f3: size,
-    patches: f32[mbsz, 1, sz, sz] @ DRAM,
-    cnn0_weight: f32[c0, 1, 3, 3] @ DRAM,
-    cnn0_bias: f32[c0] @ DRAM,
-    theta_weight: f32[ci, c0, 1, 1] @ DRAM,
-    theta_bias: f32[ci] @ DRAM,
-    phi_weight: f32[ci, c0, 1, 1] @ DRAM,
-    phi_bias: f32[ci] @ DRAM,
-    g_weight: f32[ci, c0, 1, 1] @ DRAM,
-    g_bias: f32[ci] @ DRAM,
-    out_cnn_weight: f32[c0, ci, 1, 1] @ DRAM,
-    out_cnn_bias: f32[c0] @ DRAM,
-    cnn2_weight: f32[c1, c0, 3, 3] @ DRAM,
-    cnn2_bias: f32[c1] @ DRAM,
-    cnn4_weight: f32[c2, c1, 3, 3] @ DRAM,
-    cnn4_bias: f32[c2] @ DRAM,
-    fc0_weight: f32[f0, c2, sz - 6, sz - 6] @ DRAM,
-    fc0_bias: f32[f0] @ DRAM,
-    fc2_weight: f32[f1, f0] @ DRAM,
-    fc2_bias: f32[f1] @ DRAM,
-    fc4_weight: f32[f2, f1] @ DRAM,
-    fc4_bias: f32[f2] @ DRAM,
-    fc6_weight: f32[f3, f2] @ DRAM,
-    fc6_bias: f32[f3] @ DRAM,
-    fc8_weight: f32[2, f3] @ DRAM,
-    fc8_bias: f32[2] @ DRAM,
-    out: f32[mbsz, 2] @ DRAM,
+    input: i8[dim, dim, c0] @ DRAM,
+    nlb_theta_weights: i8[ci, 1, 1, c0] @ DRAM,
+    nlb_theta_bias: i32[ci] @ DRAM,
+    nlb_theta_scale: f32 @ DRAM,
+    nlb_phi_weights: i8[ci, 1, 1, c0] @ DRAM,
+    nlb_phi_bias: i32[ci] @ DRAM,
+    nlb_phi_scale: f32 @ DRAM,
+    nlb_g_weights: i8[ci, 1, 1, c0] @ DRAM,
+    nlb_g_bias: i32[ci] @ DRAM,
+    nlb_g_scale: f32 @ DRAM,
+    nlb_matmul_scale: f32 @ DRAM,
+    softmax_input_scale: f32 @ DRAM,
+    softmax_output_scale: f32 @ DRAM,
+    nlb_matmul_1_scale: f32 @ DRAM,
+    nlb_out_weights: i8[c0, 1, 1, ci] @ DRAM,
+    nlb_out_bias: i32[c0] @ DRAM,
+    nlb_out_scale: f32 @ DRAM,
+    nlb_add_a_scale: f32 @ DRAM,
+    nlb_add_b_scale: f32 @ DRAM,
+    output: i8[dim, dim, c0] @ DRAM,
 ):
-    assert sz >= 7
+    assert dim >= 1
 
-    block: f32[mbsz, c0, sz - 2, sz - 2] @ DRAM
-    conv2d(
-        mbsz,
-        1,
+    # --- Theta 1x1 conv: 9x9x64 -> 9x9x32 ---
+    theta_out: i8[dim, dim, ci] @ DRAM
+    cpu_conv2d(
+        dim,
+        dim,
         c0,
-        sz,
-        sz,
-        sz - 2,
-        sz - 2,
+        ci,
+        1,
+        dim,
+        dim,
+        input,
+        nlb_theta_weights,
+        nlb_theta_bias,
+        theta_out,
+        nlb_theta_scale,
+    )
+
+    # Reshape NHWC [9x9x32] -> [32][81]
+    theta_reshaped: i8[ci, dim, dim] @ DRAM
+    for c in seq(0, ci):
+        for h in seq(0, dim):
+            for w in seq(0, dim):
+                theta_reshaped[c, h, w] = theta_out[h, w, c]
+
+    # --- Phi 1x1 conv: 9x9x64 -> 9x9x32 ---
+    phi_out: i8[dim, dim, ci] @ DRAM
+    cpu_conv2d(
+        dim,
+        dim,
+        c0,
+        ci,
+        1,
+        dim,
+        dim,
+        input,
+        nlb_phi_weights,
+        nlb_phi_bias,
+        phi_out,
+        nlb_phi_scale,
+    )
+
+    phi_reshaped: i8[ci, dim, dim] @ DRAM
+    for c in seq(0, ci):
+        for h in seq(0, dim):
+            for w in seq(0, dim):
+                phi_reshaped[c, h, w] = phi_out[h, w, c]
+
+    # --- G 1x1 conv: 9x9x64 -> 9x9x32 ---
+    g_out: i8[dim, dim, ci] @ DRAM
+    cpu_conv2d(
+        dim,
+        dim,
+        c0,
+        ci,
+        1,
+        dim,
+        dim,
+        input,
+        nlb_g_weights,
+        nlb_g_bias,
+        g_out,
+        nlb_g_scale,
+    )
+
+    g_reshaped: i8[ci, dim, dim] @ DRAM
+    for c in seq(0, ci):
+        for h in seq(0, dim):
+            for w in seq(0, dim):
+                g_reshaped[c, h, w] = g_out[h, w, c]
+
+    # --- Attention: theta^T @ phi -> [81][81] ---
+    # theta_reshaped[32][81], phi_reshaped[32][81]
+    # C[81][81] = theta^T[81][32] @ phi[32][81]
+    attention: i8[dim, dim, dim, dim] @ DRAM
+    cpu_matmul_transA(
+        dim, ci, theta_reshaped, phi_reshaped, attention, nlb_matmul_scale
+    )
+
+    # --- Softmax (per row, matching Gemmini Taylor approximation) ---
+    for i1 in seq(0, dim):
+        for i2 in seq(0, dim):
+            row_float: f32[dim, dim] @ DRAM
+            max_val: f32 @ DRAM
+            max_val = -1000000000.0
+            for j1 in seq(0, dim):
+                for j2 in seq(0, dim):
+                    row_float[j1, j2] = attention[i1, i2, j1, j2]
+                    row_float[j1, j2] = row_float[j1, j2] * softmax_input_scale
+                    max_val = fmaxf(max_val, row_float[j1, j2])
+
+            sum_exp: f32 @ DRAM
+            sum_exp = 0.0
+            for j1 in seq(0, dim):
+                for j2 in seq(0, dim):
+                    x: f32
+                    x2: f32
+                    x3: f32
+                    x4: f32
+                    exp_val: f32
+                    x = row_float[j1, j2] - max_val
+                    x2 = x * x
+                    x3 = x2 * x
+                    x4 = x2 * x2
+                    exp_val = 1.0 + x
+                    exp_val += x2 * 0.5
+                    exp_val += x3 * 0.166667
+                    exp_val += x4 * 0.041667
+                    exp_val = select(exp_val, 0.0, 0.0001, exp_val)
+                    exp_val = select(-8.0, x, exp_val, 0.0001)
+                    row_float[j1, j2] = exp_val
+                    sum_exp += exp_val
+
+            for j1 in seq(0, dim):
+                for j2 in seq(0, dim):
+                    softmax_val: f32
+                    quantized: f32
+                    softmax_val = row_float[j1, j2] / sum_exp
+                    quantized = softmax_val / softmax_output_scale + 0.5
+                    quantized = fmaxf(
+                        -128.0, select(quantized, 127.0, quantized, 127.0)
+                    )
+                    attention[i1, i2, j1, j2] = quantized
+
+    # --- Attended output: attention @ g^T -> [81][32] ---
+    # attention[81][81], g_reshaped[32][81]
+    # C[81][32] = attention[81][81] @ g^T[81][32]
+    attended: i8[dim, dim, ci] @ DRAM
+    cpu_matmul_transB(dim, ci, attention, g_reshaped, attended, nlb_matmul_1_scale)
+
+    # Reshape [81][32] -> NHWC [9][9][32]
+    tpg_output: i8[dim, dim, ci] @ DRAM
+    for c in seq(0, ci):
+        for h in seq(0, dim):
+            for w in seq(0, dim):
+                tpg_output[h, w, c] = attended[h, w, c]
+
+    # --- out_cnn 1x1 conv: 9x9x32 -> 9x9x64 ---
+    nlb_conv_out: i8[dim, dim, c0] @ DRAM
+    cpu_conv2d(
+        dim,
+        dim,
+        ci,
+        c0,
+        1,
+        dim,
+        dim,
+        tpg_output,
+        nlb_out_weights,
+        nlb_out_bias,
+        nlb_conv_out,
+        nlb_out_scale,
+    )
+
+    # --- Residual add: output = input * B_scale + nlb_conv_out * A_scale ---
+    cpu_resadd(
+        dim, c0, nlb_add_b_scale, nlb_add_a_scale, input, nlb_conv_out, output
+    )
+
+
+@proc
+def braggnn_inference_exo_impl(
+    input_dim: size,
+    conv1_dim: size,
+    conv2_dim: size,
+    conv3_dim: size,
+    conv1_filters: size,
+    conv2_filters: size,
+    conv3_filters: size,
+    fc1_units: size,
+    fc2_units: size,
+    fc3_units: size,
+    fc4_units: size,
+    fp32_input: f32[input_dim, input_dim, 1] @ DRAM,
+    conv1_weights: i8[conv1_filters, 3, 3, 1] @ DRAM,
+    conv1_bias: i32[conv1_filters] @ DRAM,
+    conv1_scale: f32 @ DRAM,
+    nlb_theta_weights: i8[conv2_filters, 1, 1, conv1_filters] @ DRAM,
+    nlb_theta_bias: i32[conv2_filters] @ DRAM,
+    nlb_theta_scale: f32 @ DRAM,
+    nlb_phi_weights: i8[conv2_filters, 1, 1, conv1_filters] @ DRAM,
+    nlb_phi_bias: i32[conv2_filters] @ DRAM,
+    nlb_phi_scale: f32 @ DRAM,
+    nlb_g_weights: i8[conv2_filters, 1, 1, conv1_filters] @ DRAM,
+    nlb_g_bias: i32[conv2_filters] @ DRAM,
+    nlb_g_scale: f32 @ DRAM,
+    nlb_matmul_scale: f32 @ DRAM,
+    softmax_input_scale: f32 @ DRAM,
+    softmax_output_scale: f32 @ DRAM,
+    nlb_matmul_1_scale: f32 @ DRAM,
+    nlb_out_weights: i8[conv1_filters, 1, 1, conv2_filters] @ DRAM,
+    nlb_out_bias: i32[conv1_filters] @ DRAM,
+    nlb_out_scale: f32 @ DRAM,
+    nlb_add_a_scale: f32 @ DRAM,
+    nlb_add_b_scale: f32 @ DRAM,
+    leaky1_scale: f32 @ DRAM,
+    conv2_weights: i8[conv2_filters, 3, 3, conv1_filters] @ DRAM,
+    conv2_bias: i32[conv2_filters] @ DRAM,
+    conv2_scale: f32 @ DRAM,
+    leaky3_scale: f32 @ DRAM,
+    conv3_weights: i8[conv3_filters, 3, 3, conv2_filters] @ DRAM,
+    conv3_bias: i32[conv3_filters] @ DRAM,
+    conv3_scale: f32 @ DRAM,
+    leaky5_scale: f32 @ DRAM,
+    fc1_weights: i8[fc1_units, conv3_filters, conv3_dim, conv3_dim] @ DRAM,
+    fc1_bias: i32[fc1_units] @ DRAM,
+    fc1_scale: f32 @ DRAM,
+    dense1_leaky_scale: f32 @ DRAM,
+    fc2_weights: i8[fc2_units, fc1_units, 1, 1] @ DRAM,
+    fc2_bias: i32[fc2_units] @ DRAM,
+    fc2_scale: f32 @ DRAM,
+    dense3_leaky_scale: f32 @ DRAM,
+    fc3_weights: i8[fc3_units, fc2_units, 1, 1] @ DRAM,
+    fc3_bias: i32[fc3_units] @ DRAM,
+    fc3_scale: f32 @ DRAM,
+    dense5_leaky_scale: f32 @ DRAM,
+    fc4_weights: i8[fc4_units, fc3_units, 1, 1] @ DRAM,
+    fc4_bias: i32[fc4_units] @ DRAM,
+    fc4_scale: f32 @ DRAM,
+    dense7_leaky_scale: f32 @ DRAM,
+    output_weights: i8[2, fc4_units, 1, 1] @ DRAM,
+    output_bias: i32[2] @ DRAM,
+    output_scale: f32 @ DRAM,
+    output: i8[2, 1, 1] @ DRAM,
+):
+    assert input_dim >= conv1_dim + 2
+    assert conv1_dim >= conv2_dim + 2
+    assert conv2_dim >= conv3_dim + 2
+    assert conv1_dim >= 1
+
+    # QuantizeLinear: y_scale = 0.007874015718698502 -> 1/0.007874 = 127
+    input: i8[input_dim, input_dim, 1] @ DRAM
+    for h in seq(0, input_dim):
+        for w in seq(0, input_dim):
+            q: f32
+            q = fp32_input[h, w, 0] * 127.0
+            input[h, w, 0] = q
+
+    # Conv1: 11x11x1 -> 9x9x64
+    conv1_out: i8[conv1_dim, conv1_dim, conv1_filters] @ DRAM
+    cpu_conv2d(
+        input_dim,
+        input_dim,
+        1,
+        conv1_filters,
         3,
-        3,
-        patches,
-        cnn0_weight,
-        cnn0_bias,
-        block,
+        conv1_dim,
+        conv1_dim,
+        input,
+        conv1_weights,
+        conv1_bias,
+        conv1_out,
+        conv1_scale,
     )
 
-    theta: f32[mbsz, ci, sz - 2, sz - 2] @ DRAM
-    phi: f32[mbsz, ci, sz - 2, sz - 2] @ DRAM
-    g: f32[mbsz, ci, sz - 2, sz - 2] @ DRAM
-    conv2d(
-        mbsz,
-        c0,
-        ci,
-        sz - 2,
-        sz - 2,
-        sz - 2,
-        sz - 2,
-        1,
-        1,
-        block,
-        theta_weight,
-        theta_bias,
-        theta,
-    )
-    conv2d(
-        mbsz,
-        c0,
-        ci,
-        sz - 2,
-        sz - 2,
-        sz - 2,
-        sz - 2,
-        1,
-        1,
-        block,
-        phi_weight,
-        phi_bias,
-        phi,
-    )
-    conv2d(
-        mbsz, c0, ci, sz - 2, sz - 2, sz - 2, sz - 2, 1, 1, block, g_weight, g_bias, g
-    )
-
-    attention: f32[mbsz, sz - 2, sz - 2, sz - 2, sz - 2] @ DRAM
-    attention_scores(mbsz, ci, sz - 2, sz - 2, theta, phi, attention)
-    attention_softmax(mbsz, sz - 2, sz - 2, attention)
-
-    theta_phi_g: f32[mbsz, ci, sz - 2, sz - 2] @ DRAM
-    attention_apply(mbsz, ci, sz - 2, sz - 2, attention, g, theta_phi_g)
-
-    nlb_out: f32[mbsz, c0, sz - 2, sz - 2] @ DRAM
-    conv2d(
-        mbsz,
-        ci,
-        c0,
-        sz - 2,
-        sz - 2,
-        sz - 2,
-        sz - 2,
-        1,
-        1,
-        theta_phi_g,
-        out_cnn_weight,
-        out_cnn_bias,
+    # Non-Local Block: 9x9x64 -> 9x9x64
+    nlb_out: i8[conv1_dim, conv1_dim, conv1_filters] @ DRAM
+    cpu_nlb(
+        conv1_dim,
+        conv1_filters,
+        conv2_filters,
+        conv1_out,
+        nlb_theta_weights,
+        nlb_theta_bias,
+        nlb_theta_scale,
+        nlb_phi_weights,
+        nlb_phi_bias,
+        nlb_phi_scale,
+        nlb_g_weights,
+        nlb_g_bias,
+        nlb_g_scale,
+        nlb_matmul_scale,
+        softmax_input_scale,
+        softmax_output_scale,
+        nlb_matmul_1_scale,
+        nlb_out_weights,
+        nlb_out_bias,
+        nlb_out_scale,
+        nlb_add_a_scale,
+        nlb_add_b_scale,
         nlb_out,
     )
-    residual_add(mbsz, c0, sz - 2, sz - 2, nlb_out, block)
 
-    leaky_relu_map(mbsz, c0, sz - 2, sz - 2, nlb_out)
+    # LeakyReLU + requant (NLB add output scale -> Conv2 input scale)
+    leaky_relu_requant(conv1_dim, conv1_dim, conv1_filters, nlb_out, leaky1_scale)
 
-    conv2_out: f32[mbsz, c1, sz - 4, sz - 4] @ DRAM
-    conv2d(
-        mbsz,
-        c0,
-        c1,
-        sz - 2,
-        sz - 2,
-        sz - 4,
-        sz - 4,
+    # Conv2: 9x9x64 -> 7x7x32
+    conv2_out: i8[conv2_dim, conv2_dim, conv2_filters] @ DRAM
+    cpu_conv2d(
+        conv1_dim,
+        conv1_dim,
+        conv1_filters,
+        conv2_filters,
         3,
-        3,
+        conv2_dim,
+        conv2_dim,
         nlb_out,
-        cnn2_weight,
-        cnn2_bias,
+        conv2_weights,
+        conv2_bias,
         conv2_out,
+        conv2_scale,
     )
-    leaky_relu_map(mbsz, c1, sz - 4, sz - 4, conv2_out)
 
-    conv4_out: f32[mbsz, c2, sz - 6, sz - 6] @ DRAM
-    conv2d(
-        mbsz,
-        c1,
-        c2,
-        sz - 4,
-        sz - 4,
-        sz - 6,
-        sz - 6,
+    # LeakyReLU + requant (Conv2 output scale -> Conv3 input scale)
+    leaky_relu_requant(conv2_dim, conv2_dim, conv2_filters, conv2_out, leaky3_scale)
+
+    # Conv3: 7x7x32 -> 5x5x8
+    conv3_out: i8[conv3_dim, conv3_dim, conv3_filters] @ DRAM
+    cpu_conv2d(
+        conv2_dim,
+        conv2_dim,
+        conv2_filters,
+        conv3_filters,
         3,
-        3,
+        conv3_dim,
+        conv3_dim,
         conv2_out,
-        cnn4_weight,
-        cnn4_bias,
-        conv4_out,
+        conv3_weights,
+        conv3_bias,
+        conv3_out,
+        conv3_scale,
     )
-    leaky_relu_map(mbsz, c2, sz - 6, sz - 6, conv4_out)
 
-    dense0: f32[mbsz, f0] @ DRAM
-    linear_from_map(
-        mbsz, c2, sz - 6, sz - 6, f0, conv4_out, fc0_weight, fc0_bias, dense0
+    # Flatten: NHWC [5][5][8] -> NCHW order [8][5][5] = 200 elements
+    flattened: i8[conv3_filters, conv3_dim, conv3_dim] @ DRAM
+    for ch in seq(0, conv3_filters):
+        for r in seq(0, conv3_dim):
+            for c in seq(0, conv3_dim):
+                flattened[ch, r, c] = conv3_out[r, c, ch]
+
+    # LeakyReLU + requant (Conv3 output scale -> FC1 input scale)
+    leaky_relu_requant(
+        conv3_filters, conv3_dim, conv3_dim, flattened, leaky5_scale
     )
-    leaky_relu_vec(mbsz, f0, dense0)
 
-    dense2: f32[mbsz, f1] @ DRAM
-    linear(mbsz, f0, f1, dense0, fc2_weight, fc2_bias, dense2)
-    leaky_relu_vec(mbsz, f1, dense2)
+    # FC1: 200 -> 16
+    fc1_out: i8[fc1_units, 1, 1] @ DRAM
+    cpu_fc(
+        conv3_filters,
+        conv3_dim,
+        conv3_dim,
+        fc1_units,
+        flattened,
+        fc1_weights,
+        fc1_bias,
+        fc1_out,
+        fc1_scale,
+    )
 
-    dense4: f32[mbsz, f2] @ DRAM
-    linear(mbsz, f1, f2, dense2, fc4_weight, fc4_bias, dense4)
-    leaky_relu_vec(mbsz, f2, dense4)
+    leaky_relu_requant(fc1_units, 1, 1, fc1_out, dense1_leaky_scale)
 
-    dense6: f32[mbsz, f3] @ DRAM
-    linear(mbsz, f2, f3, dense4, fc6_weight, fc6_bias, dense6)
-    leaky_relu_vec(mbsz, f3, dense6)
+    # FC2: 16 -> 8
+    fc2_out: i8[fc2_units, 1, 1] @ DRAM
+    cpu_fc(
+        fc1_units, 1, 1, fc2_units, fc1_out, fc2_weights, fc2_bias, fc2_out, fc2_scale
+    )
 
-    linear(mbsz, f3, 2, dense6, fc8_weight, fc8_bias, out)
+    leaky_relu_requant(fc2_units, 1, 1, fc2_out, dense3_leaky_scale)
+
+    # FC3: 8 -> 4
+    fc3_out: i8[fc3_units, 1, 1] @ DRAM
+    cpu_fc(
+        fc2_units, 1, 1, fc3_units, fc2_out, fc3_weights, fc3_bias, fc3_out, fc3_scale
+    )
+
+    leaky_relu_requant(fc3_units, 1, 1, fc3_out, dense5_leaky_scale)
+
+    # FC4: 4 -> 2
+    fc4_out: i8[fc4_units, 1, 1] @ DRAM
+    cpu_fc(
+        fc3_units, 1, 1, fc4_units, fc3_out, fc4_weights, fc4_bias, fc4_out, fc4_scale
+    )
+
+    leaky_relu_requant(fc4_units, 1, 1, fc4_out, dense7_leaky_scale)
+
+    # Output: 2 -> 2
+    cpu_fc(
+        fc4_units, 1, 1, 2, fc4_out, output_weights, output_bias, output, output_scale
+    )

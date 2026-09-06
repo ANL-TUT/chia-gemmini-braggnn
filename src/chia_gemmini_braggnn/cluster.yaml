@@ -24,9 +24,9 @@ auth:
     ssh_private_key: ~/.ssh/id_ed25519
     #ssh_proxy_command: "socat - SOCKS5:127.0.0.1:%h:%p,socksport=1155"
     ssh_proxy_command: "socat - TCP:%h:%p"
-    overrides:
-        "${BXE_IP}":
-            ssh_user: ${BXE_USER}
+    #overrides:
+    #    "${FIRESIM_IP}":
+    #        ssh_user: ${FIRESIM_USER}
 
 gcp_nodes:
     project: ${GCP_PROJECT}
@@ -118,12 +118,12 @@ available_node_types:
   #      - --ulimit nofile=65536:65536
   #      - --shm-size=10.24gb
 
-  bxe:
-    resources: {"BXE": 1}
-    num_workers: 1
-    compatible_ips: ["${BXE_IP}"]
-    worker_env_commands:
-          - "source ~/.bashrc && cd ~/chipyard/sims/firesim && source ./sourceme-manager.sh && export RAY_DEFAULT_PYTHON_VERSION_MATCH_LEVEL=minor"
+  #firesim:
+  #  resources: {"FPGA": 1}
+  #  num_workers: 1
+  #  compatible_ips: ["${FIRESIM_IP}"]
+  #  worker_env_commands:
+  #        - "source ~/.bashrc && cd ~/chipyard/sims/firesim && source ./sourceme-manager.sh && export RAY_DEFAULT_PYTHON_VERSION_MATCH_LEVEL=minor"
 
 
 head_env_commands: ["source ${HEAD_ENV_PATH}"]
